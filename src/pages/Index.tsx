@@ -1,8 +1,8 @@
-
 import { Navigation } from "@/components/Navigation";
 import { FiltersPanel } from "@/components/FiltersPanel";
 import { ProductGrid } from "@/components/ProductGrid";
 import { VendorMap } from "@/components/VendorMap";
+import { Footer } from "@/components/Footer";
 
 const Index = () => {
   const products = [
@@ -64,19 +64,7 @@ const Index = () => {
         </div>
       </main>
 
-      <footer className="bg-white mt-24 py-12 border-t border-baju-input-border">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <p className="text-baju-heading font-medium text-lg mb-2">BajuKawen.com</p>
-            <p className="text-baju-footer text-sm">
-              Making your special day even more memorable with our premium wedding attire rentals.
-            </p>
-            <p className="text-baju-footer text-xs mt-6">
-              © 2025 BajuKawen.com. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

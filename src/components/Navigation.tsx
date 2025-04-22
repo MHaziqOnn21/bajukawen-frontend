@@ -1,14 +1,12 @@
 
 import { ShoppingCart } from "lucide-react";
+import { Button } from "./ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Button } from "./ui/button";
 
 export const Navigation = () => {
   return (
@@ -22,22 +20,6 @@ export const Navigation = () => {
               href="#products"
             >
               Products
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              className="text-baju-subtext hover:text-baju-heading transition-colors"
-              href="#about"
-            >
-              About Us
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              className="text-baju-subtext hover:text-baju-heading transition-colors"
-              href="#contact"
-            >
-              Contact
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
