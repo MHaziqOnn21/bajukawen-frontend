@@ -1,10 +1,9 @@
-
-import { useState } from "react";
-import { ProductCarousel, Product } from "@/components/ProductCarousel";
-import { ProductInfo } from "@/components/ProductInfo";
+import { Navigation } from "@/components/Navigation";
+import { Filters } from "@/components/Filters";
+import { ProductGrid } from "@/components/ProductGrid";
 
 const Index = () => {
-  const products: Product[] = [
+  const products = [
     {
       id: 1,
       name: "Royal Elegance Collection",
@@ -43,39 +42,29 @@ const Index = () => {
     }
   ];
 
-  const [currentProduct, setCurrentProduct] = useState<Product>(products[0]);
-
   return (
     <div className="min-h-screen bg-baju-background">
       <header className="bg-header-gradient shadow-sm">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-baju-heading">BajuKawen.com</h1>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-baju-subtext hover:text-baju-heading transition-colors duration-200">Collections</a>
-              <a href="#" className="text-baju-subtext hover:text-baju-heading transition-colors duration-200">About Us</a>
-              <a href="#" className="text-baju-subtext hover:text-baju-heading transition-colors duration-200">Contact</a>
-            </nav>
-          </div>
+        <div className="container mx-auto px-4">
+          <Navigation />
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-12">
-        <div className="max-w-6xl mx-auto">
-          <ProductCarousel 
-            products={products} 
-            onProductChange={setCurrentProduct} 
-          />
-          <ProductInfo product={currentProduct} />
-        </div>
+      <main className="container mx-auto px-4 py-8 space-y-8">
+        <Filters />
+        <ProductGrid products={products} />
       </main>
 
       <footer className="bg-white mt-24 py-12 border-t border-baju-input-border">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <p className="text-baju-heading font-medium text-lg mb-2">BajuKawen.com</p>
-            <p className="text-baju-footer text-sm">Making your special day even more memorable with our premium wedding attire rentals.</p>
-            <p className="text-baju-footer text-xs mt-6">© 2025 BajuKawen.com. All rights reserved.</p>
+            <p className="text-baju-footer text-sm">
+              Making your special day even more memorable with our premium wedding attire rentals.
+            </p>
+            <p className="text-baju-footer text-xs mt-6">
+              © 2025 BajuKawen.com. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
