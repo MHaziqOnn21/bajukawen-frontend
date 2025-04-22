@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .image-fade {
+    @apply transition-opacity duration-500;
+  }
+  
+  .nav-button {
+    @apply transition-all duration-300 transform hover:scale-110;
+  }
+  
+  .product-hover {
+    @apply transition-all duration-500 transform hover:scale-105;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
