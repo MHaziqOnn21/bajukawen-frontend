@@ -1,6 +1,8 @@
+
 import { Navigation } from "@/components/Navigation";
-import { Filters } from "@/components/Filters";
+import { FiltersPanel } from "@/components/FiltersPanel";
 import { ProductGrid } from "@/components/ProductGrid";
+import { VendorMap } from "@/components/VendorMap";
 
 const Index = () => {
   const products = [
@@ -50,9 +52,16 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 space-y-8">
-        <Filters />
-        <ProductGrid products={products} />
+      <main className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="md:col-span-1">
+            <FiltersPanel />
+          </div>
+          <div className="md:col-span-3 space-y-8">
+            <VendorMap />
+            <ProductGrid products={products} />
+          </div>
+        </div>
       </main>
 
       <footer className="bg-white mt-24 py-12 border-t border-baju-input-border">
