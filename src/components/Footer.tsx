@@ -5,7 +5,7 @@ export const Footer = () => {
   return (
     <footer className="bg-white mt-24 py-12 border-t border-baju-input-border">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> {/* Reduced grid columns from 4 to 3 */}
           <div>
             <h3 className="text-baju-heading font-medium text-lg mb-4">BajuKawen.com</h3>
             <p className="text-baju-footer text-sm">
@@ -42,14 +42,6 @@ export const Footer = () => {
               </div>
             </div>
           </div>
-
-          <div>
-            <h3 className="text-baju-heading font-medium text-lg mb-4">Quick Links</h3>
-            <div className="space-y-2">
-              <a href="#products" className="block text-baju-footer hover:text-baju-footer-link transition-colors">Products</a>
-              <a href="#auth" className="block text-baju-footer hover:text-baju-footer-link transition-colors">Login/SignUp</a>
-            </div>
-          </div>
         </div>
         
         <div className="text-center mt-12">
@@ -61,3 +53,4 @@ export const Footer = () => {
     </footer>
   );
 };
+
