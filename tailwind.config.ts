@@ -36,6 +36,17 @@ export default {
 					soft: '#E5DEFF',
 					pink: '#FFDEE2',
 					peach: '#FDE1D3',
+					background: '#fff9f9',
+					text: '#5a4a4a',
+					heading: '#8b5a5a',
+					subtext: '#a78a8a',
+					'tab-inactive': '#b8a6a6',
+					'tab-active': '#8b5a5a',
+					'input-border': '#e8d6d6',
+					'input-focus': '#e8b6b6',
+					'divider': '#b8a6a6',
+					'footer': '#b8a6a6',
+					'footer-link': '#8b5a5a',
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -98,7 +109,12 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+			},
+      backgroundImage: {
+        'header-gradient': 'linear-gradient(to bottom, #f8e3e3, #f5c8c8)',
+        'button-gradient': 'linear-gradient(to bottom, #f5c8c8, #e8b6b6)',
+        'button-hover-gradient': 'linear-gradient(to bottom, #e8b6b6, #d9a3a3)',
+      },
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

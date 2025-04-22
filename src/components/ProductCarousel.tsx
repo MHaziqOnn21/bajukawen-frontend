@@ -67,20 +67,20 @@ export const ProductCarousel: React.FC<ProductCarouselProps> = ({
       <Button 
         variant="outline" 
         size="icon" 
-        className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/80 hover:bg-white shadow-md"
+        className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-gradient-to-b from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading shadow-md border-none"
         onClick={handlePrevious}
       >
-        <ArrowLeft className="h-5 w-5 text-baju-primary" />
+        <ArrowLeft className="h-5 w-5" />
         <span className="sr-only">Previous product</span>
       </Button>
       
       <Button 
         variant="outline" 
         size="icon" 
-        className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/80 hover:bg-white shadow-md"
+        className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-gradient-to-b from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading shadow-md border-none"
         onClick={handleNext}
       >
-        <ArrowRight className="h-5 w-5 text-baju-primary" />
+        <ArrowRight className="h-5 w-5" />
         <span className="sr-only">Next product</span>
       </Button>
     </div>
