@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LoggedInIndex from "./pages/LoggedInIndex";
+import LoginSignUp from "./pages/LoginSignUp";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/login" element={<LoginSignUp />} />
           <Route path="/logged-in" element={<LoggedInIndex />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,4 +1,3 @@
-
 import { ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
 import {
@@ -7,6 +6,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import { Link } from "react-router-dom";
 
 export const Navigation = () => {
   return (
@@ -23,12 +23,12 @@ export const Navigation = () => {
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink
+            <Link
+              to="/login"
               className="text-baju-subtext hover:text-baju-heading transition-colors"
-              href="#auth"
             >
               Login/SignUp
-            </NavigationMenuLink>
+            </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <Button variant="ghost" size="icon" className="text-baju-heading">
