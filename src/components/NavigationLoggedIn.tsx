@@ -28,11 +28,11 @@ export const NavigationLoggedIn = ({ username }: NavigationLoggedInProps) => {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink
-              className="text-baju-subtext hover:text-baju-heading transition-colors"
+              className="text-baju-subtext hover:text-baju-heading transition-colors flex items-center"
               href="#profile"
               aria-label={`View ${username}'s profile`}
             >
-              <User className="w-4 h-4 inline-block mr-2" />
+              <User className="w-4 h-4 mr-2 -mt-0.5" />
               {username}
             </NavigationMenuLink>
           </NavigationMenuItem>
