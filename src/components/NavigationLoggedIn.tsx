@@ -27,16 +27,14 @@ export const NavigationLoggedIn = ({ username }: NavigationLoggedInProps) => {
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Button
-              variant="ghost"
-              size="default"
-              className="flex items-center gap-2 text-baju-subtext hover:text-baju-heading transition-colors font-semibold px-0 py-0 bg-transparent border-none shadow-none cursor-pointer"
+            <NavigationMenuLink
+              className="text-baju-subtext hover:text-baju-heading transition-colors"
+              href="#profile"
               aria-label={`View ${username}'s profile`}
-              // Ready for onClick or route to profile
             >
-              <User className="w-4 h-4" />
-              <span>{username}</span>
-            </Button>
+              <User className="w-4 h-4 inline-block mr-2" />
+              {username}
+            </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <Button variant="ghost" size="icon" className="text-baju-heading">
@@ -48,4 +46,3 @@ export const NavigationLoggedIn = ({ username }: NavigationLoggedInProps) => {
     </div>
   );
 };
-
