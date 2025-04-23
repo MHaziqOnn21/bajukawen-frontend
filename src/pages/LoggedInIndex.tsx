@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 
 const LoggedInIndex = () => {
   // Simulating a logged-in user
-  const username = "Ain"; // <-- Change this to the actual username when integrated with auth
+  const username = "John"; // <-- Change this to the actual username when integrated with auth
 
   const products = [
     {
