@@ -1,5 +1,5 @@
 
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   NavigationMenu,
@@ -26,8 +26,18 @@ export const NavigationLoggedIn = ({ username }: NavigationLoggedInProps) => {
               Products
             </NavigationMenuLink>
           </NavigationMenuItem>
+          {/* Username: now clickable, as a button for later routing */}
           <NavigationMenuItem>
-            <span className="text-baju-heading font-semibold px-4 py-2 rounded bg-baju-background border border-baju-input-border">{`Hi, ${username}`}</span>
+            <Button
+              variant="ghost"
+              size="default"
+              className="text-baju-heading font-semibold px-4 py-2 rounded bg-baju-background border border-baju-input-border hover:bg-baju-heading/10 transition-colors flex items-center gap-2 cursor-pointer"
+              // In the future: could use onClick or route to user's profile
+              aria-label={`View ${username}'s profile`}
+            >
+              <User className="w-4 h-4" />
+              <span>{`Hi, ${username}`}</span>
+            </Button>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <Button variant="ghost" size="icon" className="text-baju-heading">
