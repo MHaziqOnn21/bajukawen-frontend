@@ -26,17 +26,16 @@ export const NavigationLoggedIn = ({ username }: NavigationLoggedInProps) => {
               Products
             </NavigationMenuLink>
           </NavigationMenuItem>
-          {/* Username: now clickable, as a button for later routing */}
           <NavigationMenuItem>
             <Button
               variant="ghost"
               size="default"
-              className="text-baju-heading font-semibold px-4 py-2 rounded bg-baju-background border border-baju-input-border hover:bg-baju-heading/10 transition-colors flex items-center gap-2 cursor-pointer"
-              // In the future: could use onClick or route to user's profile
+              className="flex items-center gap-2 text-baju-subtext hover:text-baju-heading transition-colors font-semibold px-0 py-0 bg-transparent border-none shadow-none cursor-pointer"
               aria-label={`View ${username}'s profile`}
+              // Ready for onClick or route to profile
             >
               <User className="w-4 h-4" />
-              <span>{`Hi, ${username}`}</span>
+              <span>{username}</span>
             </Button>
           </NavigationMenuItem>
           <NavigationMenuItem>
@@ -49,3 +48,4 @@ export const NavigationLoggedIn = ({ username }: NavigationLoggedInProps) => {
     </div>
   );
 };
+
