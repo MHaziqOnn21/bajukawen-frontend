@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Eye, EyeOff, facebook, google, twitter } from "lucide-react";
+import { Eye, EyeOff, Facebook, Twitter } from "lucide-react";
 
 // Helper for icon backgrounds and hover effect
 const SocialIconButton = ({
@@ -291,3 +291,4 @@ const LoginSignUp = () => {
 };
 
 export default LoginSignUp;
+
