@@ -16,14 +16,6 @@ export const Navigation = () => {
       <NavigationMenu>
         <NavigationMenuList className="gap-6">
           <NavigationMenuItem>
-            <NavigationMenuLink
-              className="text-baju-subtext hover:text-baju-heading transition-colors"
-              href="#products"
-            >
-              Products
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
             <Link
               to="/login"
               className="text-baju-subtext hover:text-baju-heading transition-colors"

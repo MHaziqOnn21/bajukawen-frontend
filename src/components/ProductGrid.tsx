@@ -1,6 +1,7 @@
 
 import { Product } from "./ProductCarousel";
 import { Badge } from "./ui/badge";
+import { Link } from "react-router-dom";
 
 interface ProductGridProps {
   products: Product[];
@@ -10,9 +11,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((product) => (
-        <div
+        <Link
+          to={`/product/${product.id}`}
           key={product.id}
-          className="bg-white rounded-lg overflow-hidden border border-baju-input-border shadow-sm hover:shadow-md transition-shadow"
+          className="bg-white rounded-lg overflow-hidden border border-baju-input-border shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-105"
         >
           <div className="aspect-w-16 aspect-h-9 relative">
             <img
@@ -40,7 +42,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
             <p className="text-baju-text text-sm line-clamp-2">{product.description}</p>
             <p className="text-baju-heading font-semibold">{product.price}</p>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

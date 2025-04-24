@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -14,6 +13,8 @@ export interface Product {
   color: string;
   material: string;
   size: string;
+  vendor: string;
+  theme: string;
 }
 
 interface ProductCarouselProps {

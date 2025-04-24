@@ -20,14 +20,6 @@ export const NavigationLoggedIn = ({ username }: NavigationLoggedInProps) => {
         <NavigationMenuList className="gap-6">
           <NavigationMenuItem>
             <NavigationMenuLink
-              className="text-baju-subtext hover:text-baju-heading transition-colors"
-              href="#products"
-            >
-              Products
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
               className="text-baju-subtext hover:text-baju-heading transition-colors flex items-center"
               href="#profile"
               aria-label={`View ${username}'s profile`}
