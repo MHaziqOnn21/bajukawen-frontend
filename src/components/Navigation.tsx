@@ -5,14 +5,18 @@ import { Link } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 
 export const Navigation = () => {
   return (
     <div className="flex items-center justify-between py-4">
-      <h1 className="text-2xl font-bold text-baju-heading">BajuKawen.com</h1>
+      <Link 
+        to="/" 
+        className="text-2xl font-bold text-baju-heading hover:opacity-80 transition-opacity"
+      >
+        BajuKawen.com
+      </Link>
       <NavigationMenu>
         <NavigationMenuList className="gap-6">
           <NavigationMenuItem>
