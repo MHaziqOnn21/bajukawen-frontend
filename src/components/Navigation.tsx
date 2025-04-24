@@ -1,6 +1,7 @@
 
 import { ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -21,6 +22,14 @@ export const Navigation = () => {
             >
               Products
             </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link
+              to="/login"
+              className="text-baju-subtext hover:text-baju-heading transition-colors"
+            >
+              Login/SignUp
+            </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <Button variant="ghost" size="icon" className="text-baju-heading">
