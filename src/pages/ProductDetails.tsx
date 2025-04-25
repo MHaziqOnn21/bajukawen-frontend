@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { ProductCarousel } from "@/components/ProductCarousel";
@@ -7,10 +6,25 @@ import { ProductChat } from "@/components/ProductChat";
 import { Footer } from "@/components/Footer";
 import { useState } from "react";
 import { Product } from "@/components/ProductCarousel";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [date, setDate] = useState<Date>();
+
+  const bookedDates = [
+    new Date(2025, 3, 15),
+    new Date(2025, 3, 20),
+    new Date(2025, 3, 25),
+    new Date(2025, 4, 5),
+    new Date(2025, 4, 10),
+  ];
 
   const products = [
     {
@@ -138,6 +152,15 @@ const ProductDetails = () => {
     return <div>Product not found</div>;
   }
 
+  const isDateBooked = (date: Date) => {
+    return bookedDates.some(
+      (bookedDate) =>
+        bookedDate.getFullYear() === date.getFullYear() &&
+        bookedDate.getMonth() === date.getMonth() &&
+        bookedDate.getDate() === date.getDate()
+    );
+  };
+
   return (
     <div className="min-h-screen bg-baju-background">
       <header className="bg-header-gradient shadow-sm">
@@ -147,21 +170,62 @@ const ProductDetails = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8">
           <div className="space-y-8">
             <ProductCarousel
               products={[selectedProduct]}
               onProductChange={(product) => setSelectedProduct(product)}
             />
             <ProductInfo product={selectedProduct} />
-          </div>
-          <div>
-            <ProductChat product={selectedProduct} />
+            
+            <div className="mt-8">
+              <h2 className="text-xl font-semibold text-baju-heading mb-4">Check Availability</h2>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[240px] justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    disabled={(date) => {
+                      return (
+                        date < new Date() || // Disable past dates
+                        isDateBooked(date)   // Disable booked dates
+                      );
+                    }}
+                    modifiers={{
+                      booked: bookedDates
+                    }}
+                    modifiersStyles={{
+                      booked: {
+                        backgroundColor: "#FEE2E2",
+                        color: "#EF4444",
+                        fontWeight: "bold"
+                      }
+                    }}
+                    initialFocus
+                    className={cn("p-3 pointer-events-auto")}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
         </div>
       </main>
 
       <Footer />
+      <ProductChat product={selectedProduct} />
     </div>
   );
 };
