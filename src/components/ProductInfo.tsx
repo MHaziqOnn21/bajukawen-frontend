@@ -2,6 +2,7 @@
 import { Product } from "./ProductCarousel";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface ProductInfoProps {
   product: Product;
@@ -9,6 +10,12 @@ interface ProductInfoProps {
 
 export const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
   const isAvailable = product.availability === "In Stock";
+  
+  // Convert size range string to array of sizes
+  const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+  
+  // Parse colors from the color string
+  const colors = product.color.split(" and ");
 
   return (
     <div className="mt-8 space-y-6">
@@ -38,17 +45,45 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="space-y-2">
+        <div className="space-y-4">
           <h3 className="text-sm font-medium text-baju-subtext">Available Colors</h3>
-          <p className="text-baju-text">{product.color}</p>
+          <div className="grid grid-cols-1 gap-3">
+            {colors.map((color) => (
+              <div key={color} className="flex items-center space-x-2">
+                <Checkbox id={`color-${color}`} checked disabled />
+                <label
+                  htmlFor={`color-${color}`}
+                  className="text-sm font-medium leading-none text-baju-text peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {color.trim()}
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="space-y-2">
           <h3 className="text-sm font-medium text-baju-subtext">Material</h3>
           <p className="text-baju-text">{product.material}</p>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-4">
           <h3 className="text-sm font-medium text-baju-subtext">Size Range</h3>
-          <p className="text-baju-text">{product.size}</p>
+          <div className="grid grid-cols-2 gap-3">
+            {sizes.map((size) => (
+              <div key={size} className="flex items-center space-x-2">
+                <Checkbox 
+                  id={`size-${size}`} 
+                  checked={product.size.includes(size)} 
+                  disabled 
+                />
+                <label
+                  htmlFor={`size-${size}`}
+                  className="text-sm font-medium leading-none text-baju-text peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {size}
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
