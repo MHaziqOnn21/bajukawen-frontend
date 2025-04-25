@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { ProductInfo } from "@/components/ProductInfo";
+import { ProductChat } from "@/components/ProductChat";
 import { Footer } from "@/components/Footer";
 import { useState } from "react";
 import { Product } from "@/components/ProductCarousel";
@@ -10,7 +11,6 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // This would typically come from an API, using static data for now
   const products = [
     {
       id: 1,
@@ -146,12 +146,17 @@ const ProductDetails = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 gap-8">
-          <ProductCarousel
-            products={[selectedProduct]}
-            onProductChange={(product) => setSelectedProduct(product)}
-          />
-          <ProductInfo product={selectedProduct} />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-8">
+            <ProductCarousel
+              products={[selectedProduct]}
+              onProductChange={(product) => setSelectedProduct(product)}
+            />
+            <ProductInfo product={selectedProduct} />
+          </div>
+          <div className="lg:col-span-1">
+            <ProductChat product={selectedProduct} />
+          </div>
         </div>
       </main>
 
