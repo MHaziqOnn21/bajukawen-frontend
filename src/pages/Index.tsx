@@ -1,4 +1,3 @@
-
 import { Navigation } from "@/components/Navigation";
 import { FiltersPanel } from "@/components/FiltersPanel";
 import { ProductGrid } from "@/components/ProductGrid";
@@ -19,7 +18,8 @@ const Index = () => {
       material: "Premium Lace, Satin, and Tulle",
       size: "XS - XXL (Customizable)",
       vendor: "Elegant Bridal House",
-      theme: "Traditional Elegance"
+      theme: "Traditional Elegance",
+      type: "set"
     },
     {
       id: 2,
@@ -33,7 +33,8 @@ const Index = () => {
       material: "Premium Crepe and Italian Wool",
       size: "XS - XXL (Customizable)",
       vendor: "Chic Weddings Boutique",
-      theme: "Modern Simplicity"
+      theme: "Modern Simplicity",
+      type: "set"
     },
     {
       id: 3,
@@ -47,7 +48,8 @@ const Index = () => {
       material: "Organza, Chiffon, and Linen Blend",
       size: "XS - XXL (Customizable)",
       vendor: "Floral Dreams Bridal",
-      theme: "Ethereal Garden"
+      theme: "Ethereal Garden",
+      type: "set"
     },
     {
       id: 4,
@@ -61,7 +63,8 @@ const Index = () => {
       material: "Vintage Lace, Pearl Beading, Italian Wool",
       size: "XS - XXL (Customizable)",
       vendor: "Vintage Vows Boutique",
-      theme: "Classic Vintage"
+      theme: "Classic Vintage",
+      type: "set"
     },
     {
       id: 5,
@@ -75,7 +78,8 @@ const Index = () => {
       material: "Chiffon, Light Linen, Natural Fibers",
       size: "XS - XXL (Customizable)",
       vendor: "Coastal Ceremonies",
-      theme: "Beach Romance"
+      theme: "Beach Romance",
+      type: "set"
     },
     {
       id: 6,
@@ -89,7 +93,8 @@ const Index = () => {
       material: "Royal Silk, Gold Thread Embroidery, Premium Velvet",
       size: "XS - XXL (Customizable)",
       vendor: "Royal Wedding Emporium",
-      theme: "Royal Elegance"
+      theme: "Royal Elegance",
+      type: "set"
     },
     {
       id: 7,
@@ -103,7 +108,8 @@ const Index = () => {
       material: "Organic Cotton, Natural Lace, Hemp Blend",
       size: "XS - XXL (Customizable)",
       vendor: "Boho Bridal Co",
-      theme: "Bohemian Nature"
+      theme: "Bohemian Nature",
+      type: "set"
     },
     {
       id: 8,
@@ -117,7 +123,8 @@ const Index = () => {
       material: "Tech Fabric, Modern Crepe, Performance Wool",
       size: "XS - XXL (Customizable)",
       vendor: "Metropolitan Wedding Studio",
-      theme: "Modern Urban"
+      theme: "Modern Urban",
+      type: "set"
     }
   ];
 
