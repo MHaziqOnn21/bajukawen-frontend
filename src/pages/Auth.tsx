@@ -18,23 +18,23 @@ export default function Auth() {
         </p>
       </div>
 
-      <Card className="w-full max-w-md bg-black/90 border-none shadow-xl">
+      <Card className="w-full max-w-md bg-white border border-baju-input-border shadow-md">
         <CardContent className="p-6">
           <Tabs
             defaultValue={activeTab}
             onValueChange={setActiveTab}
             className="w-full"
           >
-            <TabsList className="w-full bg-transparent border-b border-baju-divider mb-6">
+            <TabsList className="w-full bg-baju-background border-b border-baju-input-border mb-6">
               <TabsTrigger
                 value="login"
-                className="flex-1 text-baju-tab-inactive data-[state=active]:text-baju-pink data-[state=active]:border-b-2 data-[state=active]:border-baju-pink rounded-none"
+                className="flex-1 text-baju-tab-inactive data-[state=active]:text-baju-heading data-[state=active]:border-b-2 data-[state=active]:border-baju-heading rounded-none"
               >
                 Login
               </TabsTrigger>
               <TabsTrigger
                 value="signup"
-                className="flex-1 text-baju-tab-inactive data-[state=active]:text-baju-pink data-[state=active]:border-b-2 data-[state=active]:border-baju-pink rounded-none"
+                className="flex-1 text-baju-tab-inactive data-[state=active]:text-baju-heading data-[state=active]:border-b-2 data-[state=active]:border-baju-heading rounded-none"
               >
                 Sign Up
               </TabsTrigger>
@@ -43,22 +43,22 @@ export default function Auth() {
             <TabsContent value="login" className="mt-0">
               <form className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-baju-pink">Email</label>
+                  <label className="text-baju-heading text-sm font-medium">Email</label>
                   <Input
                     type="email"
                     placeholder="your@email.com"
-                    className="bg-black/50 border-baju-input-border text-white"
+                    className="border-baju-input-border text-baju-text"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-baju-pink">Password</label>
+                  <label className="text-baju-heading text-sm font-medium">Password</label>
                   <Input
                     type="password"
                     placeholder="••••••••"
-                    className="bg-black/50 border-baju-input-border text-white"
+                    className="border-baju-input-border text-baju-text"
                   />
                 </div>
-                <Button className="w-full bg-gradient-to-r from-baju-pink to-baju-peach hover:opacity-90 text-white">
+                <Button className="w-full bg-gradient-to-r from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading border-none">
                   Login
                 </Button>
                 <p className="text-center text-baju-subtext mt-4">
@@ -66,7 +66,7 @@ export default function Auth() {
                   <button
                     type="button"
                     onClick={() => setActiveTab("signup")}
-                    className="text-baju-pink hover:underline"
+                    className="text-baju-heading hover:underline"
                   >
                     Sign Up
                   </button>
@@ -77,38 +77,38 @@ export default function Auth() {
             <TabsContent value="signup" className="mt-0">
               <form className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-baju-pink">Full Name</label>
+                  <label className="text-baju-heading text-sm font-medium">Full Name</label>
                   <Input
                     type="text"
                     placeholder="John & Jane"
-                    className="bg-black/50 border-baju-input-border text-white"
+                    className="border-baju-input-border text-baju-text"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-baju-pink">Email</label>
+                  <label className="text-baju-heading text-sm font-medium">Email</label>
                   <Input
                     type="email"
                     placeholder="your@email.com"
-                    className="bg-black/50 border-baju-input-border text-white"
+                    className="border-baju-input-border text-baju-text"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-baju-pink">Password</label>
+                  <label className="text-baju-heading text-sm font-medium">Password</label>
                   <Input
                     type="password"
                     placeholder="••••••••"
-                    className="bg-black/50 border-baju-input-border text-white"
+                    className="border-baju-input-border text-baju-text"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-baju-pink">Confirm Password</label>
+                  <label className="text-baju-heading text-sm font-medium">Confirm Password</label>
                   <Input
                     type="password"
                     placeholder="••••••••"
-                    className="bg-black/50 border-baju-input-border text-white"
+                    className="border-baju-input-border text-baju-text"
                   />
                 </div>
-                <Button className="w-full bg-gradient-to-r from-baju-pink to-baju-peach hover:opacity-90 text-white">
+                <Button className="w-full bg-gradient-to-r from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading border-none">
                   Create Account
                 </Button>
                 <p className="text-center text-baju-subtext mt-4">
@@ -116,7 +116,7 @@ export default function Auth() {
                   <button
                     type="button"
                     onClick={() => setActiveTab("login")}
-                    className="text-baju-pink hover:underline"
+                    className="text-baju-heading hover:underline"
                   >
                     Login
                   </button>
