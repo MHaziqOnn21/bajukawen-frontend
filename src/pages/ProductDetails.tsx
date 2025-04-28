@@ -1,29 +1,67 @@
 import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
-import { ProductCarousel } from "@/components/ProductCarousel";
+import { ProductCarousel, Product, ProductImage } from "@/components/ProductCarousel";
 import { ProductInfo } from "@/components/ProductInfo";
 import { ProductChat } from "@/components/ProductChat";
+import { CustomerReviews, Review } from "@/components/CustomerReviews";
 import { Footer } from "@/components/Footer";
-import { useState } from "react";
-import { Product } from "@/components/ProductCarousel";
+import { useState, useEffect } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [date, setDate] = useState<Date>();
-
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
+  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [selectedSize, setSelectedSize] = useState<string>("");
+  const { toast } = useToast();
+  
   const bookedDates = [
     new Date(2025, 3, 15),
     new Date(2025, 3, 20),
     new Date(2025, 3, 25),
     new Date(2025, 4, 5),
     new Date(2025, 4, 10),
+  ];
+  
+  const reviews: Review[] = [
+    {
+      id: 1,
+      customerName: "Sarah Johnson",
+      avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150",
+      rating: 5,
+      date: "April 15, 2025",
+      comment: "Absolutely stunning wedding attire! The quality exceeded my expectations and the fit was perfect. I received so many compliments on our special day."
+    },
+    {
+      id: 2,
+      customerName: "Michael Chen",
+      avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+      rating: 4.5,
+      date: "April 2, 2025",
+      comment: "Beautiful craftsmanship and the material is extremely high quality. The dress arrived earlier than expected. The only reason for 4.5 stars is that we needed minimal alterations for a perfect fit."
+    },
+    {
+      id: 3,
+      customerName: "Jessica Rodriguez",
+      avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
+      rating: 5,
+      date: "March 28, 2025",
+      comment: "We rented this set for our pre-wedding photoshoot and it was absolutely worth it. The details and embellishments looked amazing in our photos. Highly recommend!"
+    },
+    {
+      id: 4,
+      customerName: "David Thompson",
+      rating: 4,
+      date: "March 15, 2025",
+      comment: "Great service and beautiful attire. The colors were exactly as shown in the photos. Delivery was prompt and everything arrived in perfect condition."
+    }
   ];
 
   const products = [
@@ -39,7 +77,45 @@ const ProductDetails = () => {
       material: "Premium Lace, Satin, and Tulle",
       size: "XS - XXL (Customizable)",
       vendor: "Elegant Bridal House",
-      theme: "Traditional Elegance"
+      theme: "Traditional Elegance",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1594552072238-5c4cefc1d033?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress front view",
+          type: "bride"
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1596474220362-7a329973cb35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire front view",
+          type: "groom"
+        },
+        {
+          id: 3,
+          url: "https://images.unsplash.com/photo-1583767218521-125a0b51ea35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride and groom together",
+          type: "couple"
+        },
+        {
+          id: 4,
+          url: "https://images.unsplash.com/photo-1595981234058-a9302fb97229?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Detail view of dress embroidery",
+          type: "detail"
+        },
+        {
+          id: 5,
+          url: "https://images.unsplash.com/photo-1595731379096-7c9ed678c94a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress back view",
+          type: "bride"
+        },
+        {
+          id: 6,
+          url: "https://images.unsplash.com/photo-1600091166971-7dcb86fadd27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire side view",
+          type: "groom"
+        }
+      ]
     },
     {
       id: 2,
@@ -53,7 +129,33 @@ const ProductDetails = () => {
       material: "Premium Crepe and Italian Wool",
       size: "XS - XXL (Customizable)",
       vendor: "Chic Weddings Boutique",
-      theme: "Modern Simplicity"
+      theme: "Modern Simplicity",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1566114725077-855347e7b6e3?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress front view",
+          type: "bride"
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1597117303021-cb7e94649ebc?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire front view",
+          type: "groom"
+        },
+        {
+          id: 3,
+          url: "https://images.unsplash.com/photo-1610117238596-8b79d4ab3667?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride and groom together",
+          type: "couple"
+        },
+        {
+          id: 4,
+          url: "https://images.unsplash.com/photo-1598554747436-c9293d6a588f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Detail view of suit",
+          type: "detail"
+        }
+      ]
     },
     {
       id: 3,
@@ -67,7 +169,39 @@ const ProductDetails = () => {
       material: "Organza, Chiffon, and Linen Blend",
       size: "XS - XXL (Customizable)",
       vendor: "Floral Dreams Bridal",
-      theme: "Ethereal Garden"
+      theme: "Ethereal Garden",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress front view",
+          type: "bride"
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1593030103066-0093718efeb9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire front view",
+          type: "groom"
+        },
+        {
+          id: 3,
+          url: "https://images.unsplash.com/photo-1595981234058-a9302fb97229?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Detail view of dress embroidery",
+          type: "detail"
+        },
+        {
+          id: 4,
+          url: "https://images.unsplash.com/photo-1595731379096-7c9ed678c94a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress back view",
+          type: "bride"
+        },
+        {
+          id: 5,
+          url: "https://images.unsplash.com/photo-1600091166971-7dcb86fadd27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire side view",
+          type: "groom"
+        }
+      ]
     },
     {
       id: 4,
@@ -81,7 +215,39 @@ const ProductDetails = () => {
       material: "Vintage Lace, Pearl Beading, Italian Wool",
       size: "XS - XXL (Customizable)",
       vendor: "Vintage Vows Boutique",
-      theme: "Classic Vintage"
+      theme: "Classic Vintage",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1595731379096-7c9ed678c94a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress front view",
+          type: "bride"
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1600091166971-7dcb86fadd27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire front view",
+          type: "groom"
+        },
+        {
+          id: 3,
+          url: "https://images.unsplash.com/photo-1595981234058-a9302fb97229?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Detail view of dress embroidery",
+          type: "detail"
+        },
+        {
+          id: 4,
+          url: "https://images.unsplash.com/photo-1595731379096-7c9ed678c94a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress back view",
+          type: "bride"
+        },
+        {
+          id: 5,
+          url: "https://images.unsplash.com/photo-1600091166971-7dcb86fadd27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire side view",
+          type: "groom"
+        }
+      ]
     },
     {
       id: 5,
@@ -95,7 +261,39 @@ const ProductDetails = () => {
       material: "Chiffon, Light Linen, Natural Fibers",
       size: "XS - XXL (Customizable)",
       vendor: "Coastal Ceremonies",
-      theme: "Beach Romance"
+      theme: "Beach Romance",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1610117238596-8b79d4ab3667?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress front view",
+          type: "bride"
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1598554747436-c9293d6a588f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire front view",
+          type: "groom"
+        },
+        {
+          id: 3,
+          url: "https://images.unsplash.com/photo-1595981234058-a9302fb97229?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Detail view of dress embroidery",
+          type: "detail"
+        },
+        {
+          id: 4,
+          url: "https://images.unsplash.com/photo-1595731379096-7c9ed678c94a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress back view",
+          type: "bride"
+        },
+        {
+          id: 5,
+          url: "https://images.unsplash.com/photo-1600091166971-7dcb86fadd27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire side view",
+          type: "groom"
+        }
+      ]
     },
     {
       id: 6,
@@ -109,7 +307,39 @@ const ProductDetails = () => {
       material: "Royal Silk, Gold Thread Embroidery, Premium Velvet",
       size: "XS - XXL (Customizable)",
       vendor: "Royal Wedding Emporium",
-      theme: "Royal Elegance"
+      theme: "Royal Elegance",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1583767218521-125a0b51ea35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress front view",
+          type: "bride"
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1594552072238-5c4cefc1d033?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire front view",
+          type: "groom"
+        },
+        {
+          id: 3,
+          url: "https://images.unsplash.com/photo-1595981234058-a9302fb97229?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Detail view of dress embroidery",
+          type: "detail"
+        },
+        {
+          id: 4,
+          url: "https://images.unsplash.com/photo-1595731379096-7c9ed678c94a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress back view",
+          type: "bride"
+        },
+        {
+          id: 5,
+          url: "https://images.unsplash.com/photo-1600091166971-7dcb86fadd27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire side view",
+          type: "groom"
+        }
+      ]
     },
     {
       id: 7,
@@ -123,7 +353,39 @@ const ProductDetails = () => {
       material: "Organic Cotton, Natural Lace, Hemp Blend",
       size: "XS - XXL (Customizable)",
       vendor: "Boho Bridal Co",
-      theme: "Bohemian Nature"
+      theme: "Bohemian Nature",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1595981234058-a9302fb97229?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress front view",
+          type: "bride"
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire front view",
+          type: "groom"
+        },
+        {
+          id: 3,
+          url: "https://images.unsplash.com/photo-1595981234058-a9302fb97229?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Detail view of dress embroidery",
+          type: "detail"
+        },
+        {
+          id: 4,
+          url: "https://images.unsplash.com/photo-1595731379096-7c9ed678c94a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress back view",
+          type: "bride"
+        },
+        {
+          id: 5,
+          url: "https://images.unsplash.com/photo-1600091166971-7dcb86fadd27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire side view",
+          type: "groom"
+        }
+      ]
     },
     {
       id: 8,
@@ -137,16 +399,57 @@ const ProductDetails = () => {
       material: "Tech Fabric, Modern Crepe, Performance Wool",
       size: "XS - XXL (Customizable)",
       vendor: "Metropolitan Wedding Studio",
-      theme: "Modern Urban"
+      theme: "Modern Urban",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1596553495793-27d7139cb33f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress front view",
+          type: "bride"
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1592878940526-0214b0f374f6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire front view",
+          type: "groom"
+        },
+        {
+          id: 3,
+          url: "https://images.unsplash.com/photo-1595981234058-a9302fb97229?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Detail view of dress embroidery",
+          type: "detail"
+        },
+        {
+          id: 4,
+          url: "https://images.unsplash.com/photo-1595731379096-7c9ed678c94a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride dress back view",
+          type: "bride"
+        },
+        {
+          id: 5,
+          url: "https://images.unsplash.com/photo-1600091166971-7dcb86fadd27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom attire side view",
+          type: "groom"
+        }
+      ]
     }
   ];
 
-  useState(() => {
+  useEffect(() => {
     const product = products.find(p => p.id === Number(id));
     if (product) {
       setSelectedProduct(product);
+      if (product.color) {
+        setSelectedColor(product.color.split(" and ")[0].trim());
+      }
+      if (product.size) {
+        const sizes = product.size.includes("-") ? 
+          product.size.split("-")[0].trim() : 
+          product.size.split(" ")[0].trim();
+        setSelectedSize(sizes);
+      }
     }
-  });
+  }, [id]);
 
   if (!selectedProduct) {
     return <div>Product not found</div>;
@@ -159,6 +462,24 @@ const ProductDetails = () => {
         bookedDate.getMonth() === date.getMonth() &&
         bookedDate.getDate() === date.getDate()
     );
+  };
+  
+  const handleColorSelect = (color: string) => {
+    setSelectedColor(color);
+    toast({
+      title: "Color selected",
+      description: `You've selected ${color}`,
+      duration: 2000,
+    });
+  };
+  
+  const handleSizeSelect = (size: string) => {
+    setSelectedSize(size);
+    toast({
+      title: "Size selected",
+      description: `You've selected size ${size}`,
+      duration: 2000,
+    });
   };
 
   return (
@@ -176,7 +497,14 @@ const ProductDetails = () => {
               products={[selectedProduct]}
               onProductChange={(product) => setSelectedProduct(product)}
             />
-            <ProductInfo product={selectedProduct} />
+            <ProductInfo 
+              product={selectedProduct}
+              selectedDate={selectedDate}
+              onColorSelect={handleColorSelect}
+              onSizeSelect={handleSizeSelect}
+              selectedColor={selectedColor}
+              selectedSize={selectedSize}
+            />
             
             <div className="mt-8">
               <h2 className="text-xl font-semibold text-baju-heading mb-4">Check Availability</h2>
@@ -186,18 +514,18 @@ const ProductDetails = () => {
                     variant={"outline"}
                     className={cn(
                       "w-[240px] justify-start text-left font-normal",
-                      !date && "text-muted-foreground"
+                      !selectedDate && "text-muted-foreground"
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                    {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={date}
-                    onSelect={setDate}
+                    selected={selectedDate}
+                    onSelect={setSelectedDate}
                     disabled={(date) => {
                       return (
                         date < new Date() || // Disable past dates
@@ -219,7 +547,25 @@ const ProductDetails = () => {
                   />
                 </PopoverContent>
               </Popover>
+              
+              <div className="mt-8">
+                <Button 
+                  className="bg-gradient-to-b from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading border-none"
+                  disabled={!selectedDate || !selectedColor || !selectedSize}
+                  onClick={() => {
+                    toast({
+                      title: "Booking Confirmed!",
+                      description: `You've booked ${selectedProduct.name} in ${selectedColor}, size ${selectedSize} for ${selectedDate ? format(selectedDate, 'PPP') : ''}`,
+                      duration: 5000,
+                    });
+                  }}
+                >
+                  Book Now
+                </Button>
+              </div>
             </div>
+            
+            <CustomerReviews reviews={reviews} />
           </div>
         </div>
       </main>
