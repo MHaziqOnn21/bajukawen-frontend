@@ -12,7 +12,8 @@ export interface Product {
   size: string;
   vendor: string;
   theme: string;
-  type?: 'set' | 'bride' | 'groom';
+  type: 'set' | 'bride' | 'groom';
+  images?: ProductImage[];
 }
 
 export interface ProductImage {

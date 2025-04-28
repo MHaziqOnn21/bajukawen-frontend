@@ -1,5 +1,5 @@
 
-import { Product } from "./ProductCarousel";
+import { Product } from "@/types/product";
 import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
 
@@ -18,10 +18,15 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
         >
           <div className="aspect-w-16 aspect-h-9 relative">
             <img
-              src={product.brideImage}
+              src={product.type === 'groom' ? product.groomImage : product.brideImage}
               alt={product.name}
               className="w-full h-64 object-cover"
             />
+            <div className="absolute top-2 right-2">
+              <Badge variant="secondary" className="bg-white/90 text-baju-heading">
+                {product.type === 'set' ? 'Set Match' : product.type === 'bride' ? 'Bride' : 'Groom'}
+              </Badge>
+            </div>
           </div>
           <div className="p-4 space-y-2">
             <div className="flex items-center justify-between">
