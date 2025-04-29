@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -6,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Menu, User, ShoppingBag, MapPin, CreditCard, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { ProfilePicture } from "@/components/ProfilePicture";
 
 // Define the different profile sections
 type ProfileSection = "personal" | "orders" | "address" | "payment";
@@ -138,6 +138,11 @@ export default function UserProfile() {
               {activeSection === "personal" && (
                 <div>
                   <h3 className="text-2xl font-bold mb-6 text-baju-heading">Personal Information</h3>
+                  
+                  <div className="mb-6">
+                    <ProfilePicture />
+                  </div>
+                  
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
