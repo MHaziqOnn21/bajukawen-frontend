@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import LoggedInIndex from "./pages/LoggedInIndex";
 import Auth from "./pages/Auth";
 import ProductDetails from "./pages/ProductDetails";
+import UserProfile from "./pages/UserProfile";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/logged-in" element={<LoggedInIndex />} />
           <Route path="/login" element={<Auth />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

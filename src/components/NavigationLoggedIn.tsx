@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 
@@ -25,14 +24,14 @@ export const NavigationLoggedIn = ({ username }: NavigationLoggedInProps) => {
       <NavigationMenu>
         <NavigationMenuList className="gap-6">
           <NavigationMenuItem>
-            <NavigationMenuLink
+            <Link
+              to="/profile"
               className="text-baju-subtext hover:text-baju-heading transition-colors flex items-center"
-              href="#profile"
               aria-label={`View ${username}'s profile`}
             >
               <User className="w-4 h-4 mr-2 -mt-0.5" />
               {username}
-            </NavigationMenuLink>
+            </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <Button variant="ghost" size="icon" className="text-baju-heading">
