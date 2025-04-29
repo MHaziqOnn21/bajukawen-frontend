@@ -1,11 +1,14 @@
+
+import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
-import { FiltersPanel } from "@/components/FiltersPanel";
+import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
 import { ProductGrid } from "@/components/ProductGrid";
 import { VendorMap } from "@/components/VendorMap";
 import { Footer } from "@/components/Footer";
+import { Product } from "@/types/product";
 
 const Index = () => {
-  const products = [
+  const allProducts = [
     {
       id: 1,
       name: "Royal Elegance Collection",
@@ -83,6 +86,61 @@ const Index = () => {
     }
   ];
 
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
+
+  const handleApplyFilters = (filters: FilterOptions) => {
+    const filtered = allProducts.filter(product => {
+      // Filter by product type
+      if (filters.productType && product.type !== filters.productType) {
+        return false;
+      }
+      
+      // Filter by vendor
+      if (filters.vendor && !product.vendor.toLowerCase().includes(filters.vendor.toLowerCase())) {
+        return false;
+      }
+      
+      // Filter by theme
+      if (filters.theme && !product.theme.toLowerCase().includes(filters.theme.toLowerCase())) {
+        return false;
+      }
+      
+      // Filter by color
+      if (filters.color && !product.color.toLowerCase().includes(filters.color.toLowerCase())) {
+        return false;
+      }
+      
+      // Filter by price (assuming price is in format "MYR X,XXX / day")
+      if (filters.priceRange[0] > 0) {
+        const priceMatch = product.price.match(/MYR\s+([\d,]+)/);
+        if (priceMatch) {
+          const price = parseInt(priceMatch[1].replace(/,/g, ''));
+          if (price < filters.priceRange[0]) {
+            return false;
+          }
+        }
+      }
+      
+      // Filter by size
+      if (filters.sizes.length > 0) {
+        // This is simplified logic since we don't have detailed size data
+        // In a real app, you might have specific sizes for each product
+        const productSizes = product.size.split(', ');
+        const hasSize = filters.sizes.some(size => 
+          productSizes.includes(size) || product.size.includes("Customizable")
+        );
+        
+        if (!hasSize) {
+          return false;
+        }
+      }
+      
+      return true;
+    });
+    
+    setFilteredProducts(filtered);
+  };
+
   return (
     <div className="min-h-screen bg-baju-background">
       <header className="bg-header-gradient shadow-sm">
@@ -94,11 +152,11 @@ const Index = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
-            <FiltersPanel />
+            <FiltersPanel onApplyFilters={handleApplyFilters} />
           </div>
           <div className="md:col-span-3 space-y-8">
             <VendorMap />
-            <ProductGrid products={products} />
+            <ProductGrid products={filteredProducts} />
           </div>
         </div>
       </main>

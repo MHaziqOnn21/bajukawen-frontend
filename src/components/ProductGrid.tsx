@@ -8,6 +8,14 @@ interface ProductGridProps {
 }
 
 export const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
+  if (products.length === 0) {
+    return (
+      <div className="flex justify-center items-center w-full p-12 bg-white rounded-lg border border-baju-input-border shadow-sm">
+        <p className="text-xl font-bold text-gray-500">No match found</p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((product) => (
