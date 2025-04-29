@@ -12,7 +12,7 @@ export interface Product {
   size: string;
   vendor: string;
   theme: string;
-  type: 'set' | 'bride' | 'groom';
+  type: ProductType;
   images?: ProductImage[];
 }
 

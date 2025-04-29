@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
-import { ProductCarousel, Product, ProductImage } from "@/components/ProductCarousel";
+import { ProductCarousel } from "@/components/ProductCarousel";
 import { ProductInfo } from "@/components/ProductInfo";
 import { ProductChat } from "@/components/ProductChat";
 import { CustomerReviews, Review } from "@/components/CustomerReviews";
@@ -13,6 +13,7 @@ import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
+import { Product, ProductImage } from "@/types/product";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -64,7 +65,7 @@ const ProductDetails = () => {
     }
   ];
 
-  const products = [
+  const products: Product[] = [
     {
       id: 1,
       name: "Royal Elegance Collection",
@@ -78,49 +79,50 @@ const ProductDetails = () => {
       size: "XS - XXL (Customizable)",
       vendor: "Elegant Bridal House",
       theme: "Traditional Elegance",
+      type: "set",
       images: [
         {
           id: 1,
           url: "https://images.unsplash.com/photo-1594552072238-5c4cefc1d033?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
           alt: "Bride dress front view",
-          type: "bride"
+          type: "bride" as const
         },
         {
           id: 2,
           url: "https://images.unsplash.com/photo-1596474220362-7a329973cb35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
           alt: "Groom attire front view",
-          type: "groom"
+          type: "groom" as const
         },
         {
           id: 3,
           url: "https://images.unsplash.com/photo-1583767218521-125a0b51ea35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
           alt: "Bride and groom together",
-          type: "couple"
+          type: "couple" as const
         },
         {
           id: 4,
           url: "https://images.unsplash.com/photo-1595981234058-a9302fb97229?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
           alt: "Detail view of dress embroidery",
-          type: "detail"
+          type: "detail" as const
         },
         {
           id: 5,
           url: "https://images.unsplash.com/photo-1595731379096-7c9ed678c94a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
           alt: "Bride dress back view",
-          type: "bride"
+          type: "bride" as const
         },
         {
           id: 6,
           url: "https://images.unsplash.com/photo-1600091166971-7dcb86fadd27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
           alt: "Groom attire side view",
-          type: "groom"
+          type: "groom" as const
         }
       ]
     },
     {
       id: 2,
       name: "Modern Minimalist Set",
-      description: "For the contemporary couple who values simplicity and elegance. The bride dress features a sleek silhouette with minimal embellishments and clean lines. The groom's attire features a slim-fit design with modern tailoring techniques. This set is perfect for urban weddings and modern venues.",
+      description: "For the contemporary couple who values simplicity and elegance. The bride dress features a sleek silhouette with minimal embellishments and clean lines. The groom's outfit features a slim-fit design with modern tailoring techniques. This set is perfect for urban weddings and modern venues.",
       price: "MYR 2,200 / day",
       availability: "Limited Availability",
       brideImage: "https://images.unsplash.com/photo-1566114725077-855347e7b6e3?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
