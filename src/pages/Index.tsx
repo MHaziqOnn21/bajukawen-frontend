@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
@@ -91,7 +90,7 @@ const Index = () => {
   const handleApplyFilters = (filters: FilterOptions) => {
     const filtered = allProducts.filter(product => {
       // Filter by product type
-      if (filters.productType && filters.productType !== "all" && product.type !== filters.productType) {
+      if (filters.productType && filters.productType !== "" && filters.productType !== "all" && product.type !== filters.productType) {
         return false;
       }
       
@@ -101,12 +100,12 @@ const Index = () => {
       }
       
       // Filter by theme
-      if (filters.theme && filters.theme !== "all" && !product.theme.toLowerCase().includes(filters.theme.toLowerCase())) {
+      if (filters.theme && filters.theme !== "" && filters.theme !== "all" && !product.theme.toLowerCase().includes(filters.theme.toLowerCase())) {
         return false;
       }
       
       // Filter by color
-      if (filters.color && filters.color !== "all" && !product.color.toLowerCase().includes(filters.color.toLowerCase())) {
+      if (filters.color && filters.color !== "" && filters.color !== "all" && !product.color.toLowerCase().includes(filters.color.toLowerCase())) {
         return false;
       }
       

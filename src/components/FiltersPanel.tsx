@@ -26,7 +26,8 @@ const SIZES = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"];
 const LOCATIONS = ["KL", "Putra Heights", "Subang", "Damansara", "Putrajaya", "Selangor", "Shah Alam"];
 const THEMES = ["Malay", "Western", "Indian", "Chinese"];
 const COLORS = ["White", "Ivory", "Pink", "Red", "Blue", "Green", "Gold", "Silver", "Black"];
-const VENDORS = ["Vendor A", "Vendor B", "Vendor C"];
+// Updated vendor names based on the products data
+const VENDORS = ["Elegant Bridal House", "Modern Menswear"];
 
 interface FiltersPanelProps {
   onApplyFilters: (filters: FilterOptions) => void;

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { NavigationLoggedIn } from "@/components/NavigationLoggedIn";
 import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
@@ -93,7 +92,7 @@ const LoggedInIndex = () => {
   const handleApplyFilters = (filters: FilterOptions) => {
     const filtered = allProducts.filter(product => {
       // Filter by product type
-      if (filters.productType && filters.productType !== "all" && product.type !== filters.productType) {
+      if (filters.productType && filters.productType !== "" && filters.productType !== "all" && product.type !== filters.productType) {
         return false;
       }
       
@@ -103,12 +102,12 @@ const LoggedInIndex = () => {
       }
       
       // Filter by theme
-      if (filters.theme && filters.theme !== "all" && !product.theme.toLowerCase().includes(filters.theme.toLowerCase())) {
+      if (filters.theme && filters.theme !== "" && filters.theme !== "all" && !product.theme.toLowerCase().includes(filters.theme.toLowerCase())) {
         return false;
       }
       
       // Filter by color
-      if (filters.color && filters.color !== "all" && !product.color.toLowerCase().includes(filters.color.toLowerCase())) {
+      if (filters.color && filters.color !== "" && filters.color !== "all" && !product.color.toLowerCase().includes(filters.color.toLowerCase())) {
         return false;
       }
       
