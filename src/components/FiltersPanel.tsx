@@ -27,7 +27,6 @@ const LOCATIONS = ["KL", "Putra Heights", "Subang", "Damansara", "Putrajaya", "S
 const THEMES = ["Malay", "Western", "Indian", "Chinese"];
 const COLORS = ["White", "Ivory", "Pink", "Red", "Blue", "Green", "Gold", "Silver", "Black"];
 const VENDORS = ["Vendor A", "Vendor B", "Vendor C"];
-const PRODUCT_TYPES = ["Set Match", "Bride", "Groom"];
 
 interface FiltersPanelProps {
   onApplyFilters: (filters: FilterOptions) => void;
@@ -76,7 +75,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
 
   const handleSearch = () => {
     onApplyFilters({
-      productType: productType as ProductType | "",
+      productType,
       vendor,
       location,
       theme,
