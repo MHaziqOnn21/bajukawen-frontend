@@ -2,13 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { Menu, User, ShoppingBag, MapPin, CreditCard, LogOut } from "lucide-react";
+import { Menu, User, ShoppingBag, MapPin, CreditCard, LogOut, Key } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ProfilePicture } from "@/components/ProfilePicture";
 
 // Define the different profile sections
-type ProfileSection = "personal" | "orders" | "address" | "payment";
+type ProfileSection = "personal" | "orders" | "address" | "payment" | "password";
 
 export default function UserProfile() {
   const [activeSection, setActiveSection] = useState<ProfileSection>("personal");
@@ -16,7 +16,9 @@ export default function UserProfile() {
 
   const handleLogout = () => {
     // In a real app, you would handle logout logic here
-    // For now, just navigate back to the home page
+    // For example: clear session, auth tokens, etc.
+    
+    // Navigate back to the home page
     navigate("/");
   };
   
@@ -69,6 +71,13 @@ export default function UserProfile() {
                     >
                       <CreditCard className="mr-2 h-4 w-4" /> Payment Method
                     </Button>
+                    <Button 
+                      variant={activeSection === "password" ? "default" : "ghost"} 
+                      className="justify-start" 
+                      onClick={() => setActiveSection("password")}
+                    >
+                      <Key className="mr-2 h-4 w-4" /> Password Manager
+                    </Button>
                     <Separator />
                     <Button 
                       variant="ghost" 
@@ -119,6 +128,13 @@ export default function UserProfile() {
                   onClick={() => setActiveSection("payment")}
                 >
                   <CreditCard className="mr-2 h-4 w-4" /> Payment Method
+                </Button>
+                <Button 
+                  variant={activeSection === "password" ? "default" : "ghost"} 
+                  className="justify-start" 
+                  onClick={() => setActiveSection("password")}
+                >
+                  <Key className="mr-2 h-4 w-4" /> Password Manager
                 </Button>
                 <Separator />
                 <Button 
@@ -291,6 +307,41 @@ export default function UserProfile() {
                     
                     <Button className="bg-gradient-to-r from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading border-none">
                       Add New Payment Method
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {activeSection === "password" && (
+                <div>
+                  <h3 className="text-2xl font-bold mb-6 text-baju-heading">Password Manager</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
+                      <input 
+                        type="password" 
+                        className="w-full border border-gray-300 rounded-md p-2"
+                        placeholder="Enter your current password"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                      <input 
+                        type="password" 
+                        className="w-full border border-gray-300 rounded-md p-2"
+                        placeholder="Enter new password"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+                      <input 
+                        type="password" 
+                        className="w-full border border-gray-300 rounded-md p-2"
+                        placeholder="Confirm new password"
+                      />
+                    </div>
+                    <Button className="bg-gradient-to-r from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading border-none">
+                      Update Password
                     </Button>
                   </div>
                 </div>
