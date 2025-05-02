@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { ProductCarousel } from "@/components/ProductCarousel";
@@ -74,7 +73,8 @@ const ProductDetails: React.FC = () => {
   const productId = parseInt(id || "1");
   const product = products.find(p => p.id === productId) || products[0];
   
-  const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([
+  // Demo products for the page
+  const recommendedProducts: Product[] = [
     {
       id: 3,
       name: "Modern Groom Suit",
@@ -231,7 +231,7 @@ const ProductDetails: React.FC = () => {
         }
       ]
     }
-  ]);
+  ];
 
   // Similar products based on theme or vendor
   const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
@@ -254,6 +254,34 @@ const ProductDetails: React.FC = () => {
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
   };
+
+  // Mock reviews for the CustomerReviews component
+  const mockReviews = [
+    {
+      id: 1, 
+      userName: "Sarah L.", 
+      rating: 5, 
+      date: new Date("2024-03-15"), 
+      comment: "The dress was absolutely beautiful! The quality exceeded my expectations.", 
+      userImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800"
+    },
+    {
+      id: 2, 
+      userName: "Michael T.", 
+      rating: 4, 
+      date: new Date("2024-02-28"), 
+      comment: "Great suit, fits perfectly. The delivery was fast too.", 
+      userImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800"
+    },
+    {
+      id: 3, 
+      userName: "Lily K.", 
+      rating: 5, 
+      date: new Date("2024-01-10"), 
+      comment: "Stunning collection! Everyone at our wedding was asking about our outfits.", 
+      userImage: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800"
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-baju-background">
@@ -279,14 +307,12 @@ const ProductDetails: React.FC = () => {
 
         <div className="my-12">
           <h2 className="text-2xl font-bold text-baju-heading mb-6">Chat with Vendor</h2>
-          {/* Passing an empty prop if vendor is needed by the component */}
-          <ProductChat />
+          <ProductChat product={product} />
         </div>
 
         <div className="my-12">
           <h2 className="text-2xl font-bold text-baju-heading mb-6">Customer Reviews</h2>
-          {/* Passing an empty prop if productId is needed by the component */}
-          <CustomerReviews />
+          <CustomerReviews reviews={mockReviews} />
         </div>
 
         {similarProducts.length > 0 && (

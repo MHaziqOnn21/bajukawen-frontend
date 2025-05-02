@@ -1,20 +1,27 @@
-
-import { useState } from "react";
-import { NavigationLoggedIn } from "@/components/NavigationLoggedIn";
+import React, { useState, useMemo } from "react";
+import { ProductCard } from "@/components/ProductCard";
 import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
-import { ProductGrid } from "@/components/ProductGrid";
-import { VendorMap } from "@/components/VendorMap";
+import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Product } from "@/types/product";
 
-const LoggedInIndex = () => {
-  const username = "John";
+const LoggedInIndex: React.FC = () => {
+  const [filters, setFilters] = useState<FilterOptions>({
+    productType: "",
+    vendor: "",
+    location: "",
+    theme: "",
+    color: "",
+    priceRange: [0],
+    sizes: []
+  });
 
-  const allProducts = [
+  // Demo products for the page
+  const products: Product[] = [
     {
       id: 1,
       name: "Royal Elegance Collection",
-      description: "A stunning combination of traditional elegance and modern design. The bride dress features intricate lace work with a sweetheart neckline and full flowing skirt. The groom's attire complements with a sophisticated cut and subtle matching details. Perfect for a grand traditional wedding ceremony.",
+      description: "A stunning combination of traditional elegance and modern design...",
       price: "MYR 2,800 / day",
       availability: "In Stock",
       brideImage: "https://images.unsplash.com/photo-1594552072238-5c4cefc1d033?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
@@ -24,19 +31,19 @@ const LoggedInIndex = () => {
       size: "XS - XXL (Customizable)",
       vendor: "Elegant Bridal House",
       theme: "Traditional Elegance",
-      type: "set" as const,
+      type: "set",
       images: [
         {
           id: 1,
           url: "https://images.unsplash.com/photo-1594552072238-5c4cefc1d033?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
           alt: "Bride front view",
-          type: "bride" as const
+          type: "bride"
         },
         {
           id: 2,
           url: "https://images.unsplash.com/photo-1596474220362-7a329973cb35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
           alt: "Groom front view",
-          type: "groom" as const
+          type: "groom"
         }
       ]
     },
@@ -52,14 +59,14 @@ const LoggedInIndex = () => {
       material: "Premium Lace and Silk",
       size: "XS - XXL (Customizable)",
       vendor: "Elegant Bridal House",
-      theme: "Classic",
-      type: "bride" as const,
+      theme: "Classic Vintage",
+      type: "bride",
       images: [
         {
           id: 1,
           url: "https://images.unsplash.com/photo-1566114725077-855347e7b6e3?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
           alt: "Bride front view",
-          type: "bride" as const
+          type: "bride"
         }
       ]
     },
@@ -75,103 +82,221 @@ const LoggedInIndex = () => {
       material: "Italian Wool",
       size: "XS - XXL (Customizable)",
       vendor: "Modern Menswear",
-      theme: "Contemporary",
-      type: "groom" as const,
+      theme: "Modern Simplicity",
+      type: "groom",
       images: [
         {
           id: 1,
           url: "https://images.unsplash.com/photo-1593030103066-0093718efeb9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
           alt: "Groom front view",
-          type: "groom" as const
+          type: "groom"
+        }
+      ]
+    },
+    {
+      id: 4,
+      name: "Ethereal Garden Bride",
+      description: "A dreamy bridal gown inspired by garden aesthetics with floral embellishments.",
+      price: "MYR 2,200 / day",
+      availability: "In Stock",
+      brideImage: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+      groomImage: "",
+      color: "Ivory with Floral Accents",
+      material: "Chiffon, Lace, and Organza",
+      size: "XS - XXL (Customizable)",
+      vendor: "Floral Dreams Bridal",
+      theme: "Ethereal Garden",
+      type: "bride",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride front view",
+          type: "bride"
+        }
+      ]
+    },
+    {
+      id: 5,
+      name: "Beach Romance Set",
+      description: "A light and airy matching set perfect for beach weddings.",
+      price: "MYR 2,500 / day",
+      availability: "In Stock",
+      brideImage: "https://images.unsplash.com/photo-1546804784-896d0dca3805?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+      groomImage: "https://images.unsplash.com/photo-1597999060200-1d9c590a335d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+      color: "Ivory and Beige",
+      material: "Lightweight Cotton and Chiffon",
+      size: "XS - XXL (Customizable)",
+      vendor: "Coastal Ceremonies",
+      theme: "Beach Romance",
+      type: "set",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1546804784-896d0dca3805?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride front view",
+          type: "bride"
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1597999060200-1d9c590a335d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom front view",
+          type: "groom"
+        }
+      ]
+    },
+    {
+      id: 6,
+      name: "Royal Wedding Attire",
+      description: "An opulent set fit for royalty with exquisite detailing.",
+      price: "MYR 3,500 / day",
+      availability: "In Stock",
+      brideImage: "https://images.unsplash.com/photo-1583187855710-db7596d1e871?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+      groomImage: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+      color: "Gold and Ivory",
+      material: "Luxury Satin, Silk, and Crystal Embellishments",
+      size: "XS - XXL (Customizable)",
+      vendor: "Royal Wedding Emporium",
+      theme: "Royal Elegance",
+      type: "set",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1583187855710-db7596d1e871?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride front view",
+          type: "bride"
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom front view",
+          type: "groom"
+        }
+      ]
+    },
+    {
+      id: 7,
+      name: "Bohemian Bride",
+      description: "A free-spirited bridal gown with natural elements and relaxed silhouette.",
+      price: "MYR 1,900 / day",
+      availability: "In Stock",
+      brideImage: "https://images.unsplash.com/photo-1595945722526-25e783f0ebd9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+      groomImage: "",
+      color: "Cream with Earth Tones",
+      material: "Natural Fabrics, Lace, and Macramé",
+      size: "XS - XXL (Customizable)",
+      vendor: "Boho Bridal Co",
+      theme: "Bohemian Nature",
+      type: "bride",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1595945722526-25e783f0ebd9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride front view",
+          type: "bride"
+        }
+      ]
+    },
+    {
+      id: 8,
+      name: "Metropolitan Elegance",
+      description: "A sleek, urban-inspired wedding set with contemporary design elements.",
+      price: "MYR 2,800 / day",
+      availability: "In Stock",
+      brideImage: "https://images.unsplash.com/photo-1563203369-26f2e4a5ccf6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+      groomImage: "https://images.unsplash.com/photo-1594938374182-a57061752344?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+      color: "White and Black",
+      material: "Contemporary Fabrics with Minimalist Design",
+      size: "XS - XXL (Customizable)",
+      vendor: "Metropolitan Wedding Studio",
+      theme: "Modern Urban",
+      type: "set",
+      images: [
+        {
+          id: 1,
+          url: "https://images.unsplash.com/photo-1563203369-26f2e4a5ccf6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Bride front view",
+          type: "bride"
+        },
+        {
+          id: 2,
+          url: "https://images.unsplash.com/photo-1594938374182-a57061752344?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+          alt: "Groom front view",
+          type: "groom"
         }
       ]
     }
   ];
 
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
+  const handleApplyFilters = (newFilters: FilterOptions) => {
+    setFilters(newFilters);
+  };
 
-  const handleApplyFilters = (filters: FilterOptions) => {
-    const filtered = allProducts.filter(product => {
-      // Filter by product type
-      if (filters.productType && filters.productType !== "" && 
-          filters.productType !== "all" && 
-          product.type !== filters.productType) {
+  // Filter products based on selected filters
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => {
+      // Filter by product type (set, bride, groom)
+      if (filters.productType && filters.productType !== "all" && product.type !== filters.productType) {
         return false;
       }
-      
+
       // Filter by vendor
       if (filters.vendor && !product.vendor.toLowerCase().includes(filters.vendor.toLowerCase())) {
         return false;
       }
-      
+
       // Filter by theme
-      if (filters.theme && filters.theme !== "" && 
-          filters.theme !== "all-themes" && 
-          !product.theme.toLowerCase().includes(filters.theme.toLowerCase())) {
+      if (filters.theme && filters.theme !== "all-themes" && !product.theme.toLowerCase().includes(filters.theme.toLowerCase())) {
         return false;
       }
-      
+
       // Filter by color
-      if (filters.color && filters.color !== "" && 
-          filters.color !== "all-colors" && 
-          !product.color.toLowerCase().includes(filters.color.toLowerCase())) {
+      if (filters.color && filters.color !== "all-colors" && !product.color.toLowerCase().includes(filters.color.toLowerCase())) {
         return false;
-      }
-      
-      // Filter by price (assuming price is in format "MYR X,XXX / day")
-      if (filters.priceRange[0] > 0) {
-        const priceMatch = product.price.match(/MYR\s+([\d,]+)/);
-        if (priceMatch) {
-          const price = parseInt(priceMatch[1].replace(/,/g, ''));
-          if (price < filters.priceRange[0]) {
-            return false;
-          }
-        }
       }
       
       // Filter by size
-      if (filters.sizes.length > 0) {
-        // This is simplified logic since we don't have detailed size data
-        // In a real app, you might have specific sizes for each product
-        const productSizes = product.size.split(', ');
-        const hasSize = filters.sizes.some(size => 
-          productSizes.includes(size) || product.size.includes("Customizable")
+      if (filters.sizes && filters.sizes.length > 0) {
+        const hasMatchingSize = filters.sizes.some(size => 
+          product.size.includes(size)
         );
-        
-        if (!hasSize) {
-          return false;
-        }
+        if (!hasMatchingSize) return false;
       }
       
+      // Filter by price
+      if (filters.priceRange && filters.priceRange.length > 0) {
+        const maxPrice = filters.priceRange[0];
+        const productPrice = parseInt(product.price.split(' ')[1].replace(',', ''), 10);
+        if (productPrice > maxPrice) return false;
+      }
+
       return true;
     });
-    
-    setFilteredProducts(filtered);
-  };
+  }, [products, filters]);
 
   return (
     <div className="min-h-screen bg-baju-background">
       <header className="bg-header-gradient shadow-sm">
         <div className="container mx-auto px-4">
-          <NavigationLoggedIn username={username} />
+          <Navigation />
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-1">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="lg:col-span-1">
             <FiltersPanel onApplyFilters={handleApplyFilters} />
           </div>
-          <div className="md:col-span-3 space-y-8">
-            <VendorMap />
-            {filteredProducts.length > 0 ? (
-              <ProductGrid products={filteredProducts} />
-            ) : (
-              <div className="text-center py-16 bg-white rounded-lg border border-baju-input-border">
-                <h3 className="text-xl font-semibold text-baju-heading mb-2">No match found</h3>
-                <p className="text-baju-subtext">Try adjusting your filters to find more products.</p>
-              </div>
-            )}
+
+          <div className="lg:col-span-3">
+            <h2 className="text-2xl font-bold text-baju-heading mb-6">
+              Featured Products
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
           </div>
         </div>
       </main>

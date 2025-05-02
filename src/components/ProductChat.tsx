@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageCircle } from "lucide-react";
-import { Product } from "./ProductCarousel";
+import { Product } from "@/types/product";
 
 interface Message {
   id: number;

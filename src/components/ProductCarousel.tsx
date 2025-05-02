@@ -25,7 +25,8 @@ export const ProductCarousel: React.FC<ProductCarouselProps> = ({
     );
   }
   
-  const currentProduct = products[currentIndex];
+  // Ensure we have a valid product at currentIndex
+  const currentProduct = products[currentIndex] || products[0];
   
   // Define images array for the product
   const productImages = currentProduct.images || [
