@@ -132,6 +132,7 @@ const ProductDetails = () => {
       size: "XS - XXL (Customizable)",
       vendor: "Chic Weddings Boutique",
       theme: "Modern Simplicity",
+      type: "set",
       images: [
         {
           id: 1,
