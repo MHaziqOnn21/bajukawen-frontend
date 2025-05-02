@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { NavigationLoggedIn } from "@/components/NavigationLoggedIn";
 import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
@@ -88,6 +89,7 @@ const LoggedInIndex = () => {
   ];
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   const handleApplyFilters = (filters: FilterOptions) => {
     const filtered = allProducts.filter(product => {
@@ -148,6 +150,11 @@ const LoggedInIndex = () => {
     setFilteredProducts(filtered);
   };
 
+  // Handle location changes from the VendorMap component
+  const handleLocationChange = (location: string) => {
+    setSelectedLocation(location);
+  };
+
   return (
     <div className="min-h-screen bg-baju-background">
       <header className="bg-header-gradient shadow-sm">
@@ -162,7 +169,10 @@ const LoggedInIndex = () => {
             <FiltersPanel onApplyFilters={handleApplyFilters} />
           </div>
           <div className="md:col-span-3 space-y-8">
-            <VendorMap />
+            <VendorMap 
+              selectedLocation={selectedLocation}
+              onLocationChange={handleLocationChange}
+            />
             <ProductGrid products={filteredProducts} />
           </div>
         </div>

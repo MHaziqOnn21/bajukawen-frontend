@@ -23,7 +23,6 @@ import {
 import { Product, ProductType } from "@/types/product";
 
 const SIZES = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"];
-const LOCATIONS = ["KL", "Putra Heights", "Subang", "Damansara", "Putrajaya", "Selangor", "Shah Alam"];
 const THEMES = ["Malay", "Western", "Indian", "Chinese"];
 const COLORS = ["White", "Ivory", "Pink", "Red", "Blue", "Green", "Gold", "Silver", "Black"];
 // Updated vendor names based on the products data
@@ -36,7 +35,7 @@ interface FiltersPanelProps {
 export interface FilterOptions {
   productType: ProductType | "";
   vendor: string;
-  location: string;
+  location: string; // We'll keep this in the interface for compatibility
   theme: string;
   color: string;
   priceRange: number[];
@@ -45,14 +44,11 @@ export interface FilterOptions {
 
 export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) => {
   const [vendorSearch, setVendorSearch] = useState("");
-  const [locationSearch, setLocationSearch] = useState("");
   const [showVendorCommand, setShowVendorCommand] = useState(false);
-  const [showLocationCommand, setShowLocationCommand] = useState(false);
   
   // Filter states
   const [productType, setProductType] = useState<ProductType | "">("");
   const [vendor, setVendor] = useState("");
-  const [location, setLocation] = useState("");
   const [theme, setTheme] = useState("");
   const [color, setColor] = useState("");
   const [priceRange, setPriceRange] = useState([0]);
@@ -60,10 +56,6 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
 
   const filteredVendors = VENDORS.filter(vendor =>
     vendor.toLowerCase().includes(vendorSearch.toLowerCase())
-  );
-
-  const filteredLocations = LOCATIONS.filter(location =>
-    location.toLowerCase().includes(locationSearch.toLowerCase())
   );
 
   const handleSizeToggle = (size: string) => {
@@ -78,7 +70,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
     onApplyFilters({
       productType,
       vendor,
-      location,
+      location: "", // We're moving location handling to the VendorMap component
       theme,
       color,
       priceRange,
@@ -136,44 +128,6 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
                           }}
                         >
                           {v}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </CommandDialog>
-            </div>
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-baju-text mb-1.5 block">Location</label>
-            <div className="relative">
-              <button
-                className="w-full flex items-center justify-between px-3 py-2 text-sm border rounded-md border-baju-input-border bg-background"
-                onClick={() => setShowLocationCommand(true)}
-              >
-                <span>{location || "Search location..."}</span>
-                <Search className="h-4 w-4" />
-              </button>
-              <CommandDialog open={showLocationCommand} onOpenChange={setShowLocationCommand}>
-                <Command>
-                  <CommandInput 
-                    placeholder="Search locations..." 
-                    value={locationSearch}
-                    onValueChange={setLocationSearch}
-                  />
-                  <CommandList>
-                    <CommandEmpty>No locations found.</CommandEmpty>
-                    <CommandGroup>
-                      {filteredLocations.map((loc) => (
-                        <CommandItem
-                          key={loc}
-                          onSelect={() => {
-                            setLocation(loc);
-                            setShowLocationCommand(false);
-                          }}
-                        >
-                          {loc}
                         </CommandItem>
                       ))}
                     </CommandGroup>
