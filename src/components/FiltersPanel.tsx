@@ -24,16 +24,17 @@ import { Product, ProductType } from "@/types/product";
 
 const SIZES = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"];
 const LOCATIONS = ["KL", "Putra Heights", "Subang", "Damansara", "Putrajaya", "Selangor", "Shah Alam"];
-const THEMES = ["Traditional Elegance", "Modern Simplicity", "Ethereal Garden", "Classic Vintage", "Beach Romance", "Royal Elegance", "Bohemian Nature", "Modern Urban"];
-const COLORS = ["White", "Ivory", "Pink", "Red", "Blue", "Green", "Gold", "Silver", "Black", "Champagne", "Blush", "Charcoal", "Sage", "Purple", "Earth Tones"];
-const VENDORS = ["Elegant Bridal House", "Chic Weddings Boutique", "Floral Dreams Bridal", "Vintage Vows Boutique", "Coastal Ceremonies", "Royal Wedding Emporium", "Boho Bridal Co", "Metropolitan Wedding Studio"];
+const THEMES = ["Malay", "Western", "Indian", "Chinese"];
+const COLORS = ["White", "Ivory", "Pink", "Red", "Blue", "Green", "Gold", "Silver", "Black"];
+// Updated vendor names based on the products data
+const VENDORS = ["Elegant Bridal House", "Modern Menswear"];
 
 interface FiltersPanelProps {
   onApplyFilters: (filters: FilterOptions) => void;
 }
 
 export interface FilterOptions {
-  productType: ProductType | "all" | "";
+  productType: ProductType | "";
   vendor: string;
   location: string;
   theme: string;
@@ -49,7 +50,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
   const [showLocationCommand, setShowLocationCommand] = useState(false);
   
   // Filter states
-  const [productType, setProductType] = useState<ProductType | "all" | "">("");
+  const [productType, setProductType] = useState<ProductType | "">("");
   const [vendor, setVendor] = useState("");
   const [location, setLocation] = useState("");
   const [theme, setTheme] = useState("");
@@ -93,7 +94,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
         <div className="space-y-4">
           <div>
             <label className="text-sm font-medium text-baju-text mb-1.5 block">Product Type</label>
-            <Select onValueChange={(value) => setProductType(value as ProductType | "all" | "")}>
+            <Select onValueChange={(value) => setProductType(value as ProductType | "")}>
               <SelectTrigger className="w-full border-baju-input-border">
                 <SelectValue placeholder="Select product type" />
               </SelectTrigger>
@@ -189,7 +190,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
                 <SelectValue placeholder="Select theme" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all-themes">All Themes</SelectItem>
+                <SelectItem value="all">All Themes</SelectItem>
                 {THEMES.map((theme) => (
                   <SelectItem key={theme} value={theme.toLowerCase()}>
                     {theme}
@@ -206,7 +207,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
                 <SelectValue placeholder="Select color" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all-colors">All Colors</SelectItem>
+                <SelectItem value="all">All Colors</SelectItem>
                 {COLORS.map((color) => (
                   <SelectItem key={color} value={color.toLowerCase()}>
                     {color}

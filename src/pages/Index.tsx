@@ -90,7 +90,8 @@ const Index = () => {
   const handleApplyFilters = (filters: FilterOptions) => {
     const filtered = allProducts.filter(product => {
       // Filter by product type
-      if (filters.productType && filters.productType !== "all" && 
+      if (filters.productType && filters.productType !== "" && 
+          filters.productType !== "all" && 
           product.type !== filters.productType) {
         return false;
       }
@@ -101,13 +102,15 @@ const Index = () => {
       }
       
       // Filter by theme
-      if (filters.theme && filters.theme !== "all-themes" && 
+      if (filters.theme && filters.theme !== "" && 
+          filters.theme !== "all" && 
           !product.theme.toLowerCase().includes(filters.theme.toLowerCase())) {
         return false;
       }
       
       // Filter by color
-      if (filters.color && filters.color !== "all-colors" && 
+      if (filters.color && filters.color !== "" && 
+          filters.color !== "all" && 
           !product.color.toLowerCase().includes(filters.color.toLowerCase())) {
         return false;
       }
@@ -158,14 +161,7 @@ const Index = () => {
           </div>
           <div className="md:col-span-3 space-y-8">
             <VendorMap />
-            {filteredProducts.length > 0 ? (
-              <ProductGrid products={filteredProducts} />
-            ) : (
-              <div className="text-center py-16 bg-white rounded-lg border border-baju-input-border">
-                <h3 className="text-xl font-semibold text-baju-heading mb-2">No match found</h3>
-                <p className="text-baju-subtext">Try adjusting your filters to find more products.</p>
-              </div>
-            )}
+            <ProductGrid products={filteredProducts} />
           </div>
         </div>
       </main>

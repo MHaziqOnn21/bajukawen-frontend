@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Product } from "@/types/product";
+import { Product } from "./ProductCarousel";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";

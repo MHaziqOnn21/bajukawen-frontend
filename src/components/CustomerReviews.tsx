@@ -53,7 +53,7 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({ reviews }) => 
                 <Avatar>
                   <AvatarImage src={review.avatarUrl} alt={review.customerName} />
                   <AvatarFallback className="bg-baju-light text-baju-heading">
-                    {review.customerName && review.customerName.split(' ').map(n => n[0]).join('')}
+                    {review.customerName.split(' ').map(n => n[0]).join('')}
                   </AvatarFallback>
                 </Avatar>
                 <div>
