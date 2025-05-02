@@ -98,7 +98,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
                 <SelectValue placeholder="Select product type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Types</SelectItem>
+                <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="set">Set Match</SelectItem>
                 <SelectItem value="bride">Bride</SelectItem>
                 <SelectItem value="groom">Groom</SelectItem>
@@ -189,7 +189,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
                 <SelectValue placeholder="Select theme" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Themes</SelectItem>
+                <SelectItem value="all-themes">All Themes</SelectItem>
                 {THEMES.map((theme) => (
                   <SelectItem key={theme} value={theme.toLowerCase()}>
                     {theme}
@@ -206,7 +206,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
                 <SelectValue placeholder="Select color" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Colors</SelectItem>
+                <SelectItem value="all-colors">All Colors</SelectItem>
                 {COLORS.map((color) => (
                   <SelectItem key={color} value={color.toLowerCase()}>
                     {color}

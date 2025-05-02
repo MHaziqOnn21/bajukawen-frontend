@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
@@ -103,14 +104,14 @@ const Index = () => {
       
       // Filter by theme
       if (filters.theme && filters.theme !== "" && 
-          filters.theme !== "all" && 
+          filters.theme !== "all-themes" && 
           !product.theme.toLowerCase().includes(filters.theme.toLowerCase())) {
         return false;
       }
       
       // Filter by color
       if (filters.color && filters.color !== "" && 
-          filters.color !== "all" && 
+          filters.color !== "all-colors" && 
           !product.color.toLowerCase().includes(filters.color.toLowerCase())) {
         return false;
       }
@@ -161,7 +162,14 @@ const Index = () => {
           </div>
           <div className="md:col-span-3 space-y-8">
             <VendorMap />
-            <ProductGrid products={filteredProducts} />
+            {filteredProducts.length > 0 ? (
+              <ProductGrid products={filteredProducts} />
+            ) : (
+              <div className="text-center py-16 bg-white rounded-lg border border-baju-input-border">
+                <h3 className="text-xl font-semibold text-baju-heading mb-2">No match found</h3>
+                <p className="text-baju-subtext">Try adjusting your filters to find more products.</p>
+              </div>
+            )}
           </div>
         </div>
       </main>
