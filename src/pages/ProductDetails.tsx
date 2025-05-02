@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { ProductInfo } from "@/components/ProductInfo";
 import { ProductChat } from "@/components/ProductChat";
-import { CustomerReviews } from "@/components/CustomerReviews";
+import { CustomerReviews, Review } from "@/components/CustomerReviews";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Product } from "@/types/product";
+import { ProductGrid } from "@/components/ProductGrid";
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams();
@@ -256,30 +257,30 @@ const ProductDetails: React.FC = () => {
   };
 
   // Mock reviews for the CustomerReviews component
-  const mockReviews = [
+  const mockReviews: Review[] = [
     {
       id: 1, 
-      userName: "Sarah L.", 
+      customerName: "Sarah L.", 
       rating: 5, 
-      date: new Date("2024-03-15"), 
+      date: "May 15, 2024", 
       comment: "The dress was absolutely beautiful! The quality exceeded my expectations.", 
-      userImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800"
+      avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800"
     },
     {
       id: 2, 
-      userName: "Michael T.", 
+      customerName: "Michael T.", 
       rating: 4, 
-      date: new Date("2024-02-28"), 
+      date: "April 28, 2024", 
       comment: "Great suit, fits perfectly. The delivery was fast too.", 
-      userImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800"
+      avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800"
     },
     {
       id: 3, 
-      userName: "Lily K.", 
+      customerName: "Lily K.", 
       rating: 5, 
-      date: new Date("2024-01-10"), 
+      date: "March 10, 2024", 
       comment: "Stunning collection! Everyone at our wedding was asking about our outfits.", 
-      userImage: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800"
+      avatarUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800"
     }
   ];
 
@@ -311,33 +312,13 @@ const ProductDetails: React.FC = () => {
         </div>
 
         <div className="my-12">
-          <h2 className="text-2xl font-bold text-baju-heading mb-6">Customer Reviews</h2>
           <CustomerReviews reviews={mockReviews} />
         </div>
 
         {similarProducts.length > 0 && (
           <div className="my-12">
             <h2 className="text-2xl font-bold text-baju-heading mb-6">Similar Products</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {similarProducts.map(p => (
-                <div key={p.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                  <div className="h-64 overflow-hidden">
-                    <img 
-                      src={p.brideImage || p.groomImage} 
-                      alt={p.name} 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-lg mb-1">{p.name}</h3>
-                    <p className="text-sm text-baju-subtext mb-2">
-                      {p.vendor} • {p.theme}
-                    </p>
-                    <p className="font-bold text-baju-price">{p.price}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ProductGrid products={similarProducts} />
           </div>
         )}
       </main>
