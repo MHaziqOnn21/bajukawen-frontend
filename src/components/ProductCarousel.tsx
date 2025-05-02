@@ -1,34 +1,12 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight, Image } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Product, ProductImage } from "@/types/product";
 
-export interface ProductImage {
-  id: number;
-  url: string;
-  alt: string;
-  type: "bride" | "groom" | "couple" | "detail";
-}
-
-export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  availability: string;
-  brideImage: string;
-  groomImage: string;
-  color: string;
-  material: string;
-  size: string;
-  vendor: string;
-  theme: string;
-  images?: ProductImage[];
-}
-
-interface ProductCarouselProps {
+export interface ProductCarouselProps {
   products: Product[];
-  onProductChange: (product: Product) => void;
+  onProductChange?: (product: Product) => void;
 }
 
 export const ProductCarousel: React.FC<ProductCarouselProps> = ({
@@ -38,36 +16,58 @@ export const ProductCarousel: React.FC<ProductCarouselProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   
+  // Handle case when products array is empty
+  if (!products || products.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg">
+        <p className="text-baju-subtext">No product images available</p>
+      </div>
+    );
+  }
+  
   const currentProduct = products[currentIndex];
   
   // Define images array for the product
   const productImages = currentProduct.images || [
-    { 
+    ...(currentProduct.brideImage ? [{ 
       id: 1, 
       url: currentProduct.brideImage, 
       alt: `Bride dress from ${currentProduct.name} collection`,
       type: "bride" as const
-    },
-    { 
+    }] : []),
+    ...(currentProduct.groomImage ? [{ 
       id: 2, 
       url: currentProduct.groomImage, 
       alt: `Groom attire from ${currentProduct.name} collection`,
       type: "groom" as const
-    }
+    }] : [])
   ];
+
+  // If there are no images at all, show placeholder
+  if (productImages.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg">
+        <p className="text-baju-subtext">No product images available</p>
+      </div>
+    );
+  }
 
   const handlePrevious = () => {
     const newIndex = currentIndex === 0 ? products.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
     setActiveImageIndex(0);
-    onProductChange(products[newIndex]);
+    if (onProductChange) {
+      onProductChange(products[newIndex]);
+    }
   };
 
   const handleNext = () => {
     const newIndex = currentIndex === products.length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
     setActiveImageIndex(0);
-    onProductChange(products[newIndex]);
+    if (onProductChange) {
+      onProductChange(products[newIndex]);
+    }
   };
   
   const handleThumbnailClick = (index: number) => {
