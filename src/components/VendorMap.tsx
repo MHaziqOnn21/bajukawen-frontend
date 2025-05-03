@@ -5,6 +5,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { MapPin, Search } from 'lucide-react';
 import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export const vendorLocations = [
   { id: 1, name: "Vendor A", lat: 3.1390, lng: 101.6869, address: "Kuala Lumpur" },
@@ -31,10 +33,6 @@ export const VendorMap: React.FC<VendorMapProps> = ({ selectedLocation = "", onL
   const filteredVendors = selectedLocation 
     ? vendorLocations.filter(vendor => vendor.address === selectedLocation)
     : vendorLocations;
-  
-  const filteredLocations = LOCATIONS.filter(location =>
-    location.toLowerCase().includes(locationSearch.toLowerCase())
-  );
 
   useEffect(() => {
     if (!mapContainer.current || !mapboxToken) return;
@@ -109,41 +107,29 @@ export const VendorMap: React.FC<VendorMapProps> = ({ selectedLocation = "", onL
           <input
             type="text"
             placeholder="Enter Mapbox token"
-            className="px-3 py-1 border rounded"
+            className="px-3 py-1 border rounded w-full max-w-xs"
             onChange={(e) => setMapboxToken(e.target.value)}
           />
         ) : (
           <div className="flex items-center space-x-2">
             <div className="relative">
-              <button
-                className="flex items-center justify-between px-3 py-1 text-sm border rounded-md border-baju-input-border bg-background"
-                onClick={() => setShowLocationCommand(true)}
+              {/* More visible location filter using Select component instead of a button */}
+              <Select
+                value={selectedLocation || ""}
+                onValueChange={(value) => onLocationChange && onLocationChange(value)}
               >
-                <span>{selectedLocation || "All locations"}</span>
-                <Search className="h-4 w-4 ml-2" />
-              </button>
-              <CommandDialog open={showLocationCommand} onOpenChange={setShowLocationCommand}>
-                <Command>
-                  <CommandInput 
-                    placeholder="Search locations..." 
-                    value={locationSearch}
-                    onValueChange={setLocationSearch}
-                  />
-                  <CommandList>
-                    <CommandEmpty>No locations found.</CommandEmpty>
-                    <CommandGroup>
-                      {filteredLocations.map((location) => (
-                        <CommandItem
-                          key={location}
-                          onSelect={() => handleLocationSelect(location)}
-                        >
-                          {location}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </CommandDialog>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Filter by location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All locations</SelectItem>
+                  {LOCATIONS.map((location) => (
+                    <SelectItem key={location} value={location}>
+                      {location}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             {selectedLocation && (
               <Button 
@@ -160,7 +146,13 @@ export const VendorMap: React.FC<VendorMapProps> = ({ selectedLocation = "", onL
       <div ref={mapContainer} className="w-full h-[300px] rounded-lg overflow-hidden" />
       {!mapboxToken && (
         <div className="mt-4 text-sm text-baju-subtext text-center">
-          Please enter your Mapbox token to view the map. Get one at mapbox.com
+          <p className="font-medium">How to integrate Mapbox:</p>
+          <ol className="text-left pl-4 mt-2 list-decimal">
+            <li>Create a Mapbox account at <a href="https://mapbox.com" className="text-blue-500 underline" target="_blank" rel="noopener noreferrer">mapbox.com</a></li>
+            <li>Navigate to your Mapbox account dashboard</li>
+            <li>Find your default public token or create a new one</li>
+            <li>Paste the token in the field above</li>
+          </ol>
         </div>
       )}
     </div>
