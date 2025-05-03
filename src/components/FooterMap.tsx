@@ -18,18 +18,18 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const addressCoords = { lat: 3.139, lng: 101.6869 };
+const addressCoords = {
+  lat: 3.139,
+  lng: 101.6869
+};
 
 const FooterMap = () => {
   return (
     <div className="w-full">
-      <div
-        className="w-full h-[120px] rounded-md border border-baju-input-border overflow-hidden"
-        style={{ minHeight: "100px" }}
-      >
-        <MapContainer
-          center={[addressCoords.lat, addressCoords.lng]}
-          zoom={15}
+      <div className="w-full h-[120px] rounded-md border border-baju-input-border overflow-hidden" style={{ minHeight: "100px" }}>
+        <MapContainer 
+          defaultCenter={[addressCoords.lat, addressCoords.lng]} 
+          zoom={15} 
           style={{ height: '100%', width: '100%' }}
           zoomControl={false}
           dragging={false}
@@ -42,9 +42,7 @@ const FooterMap = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <Marker position={[addressCoords.lat, addressCoords.lng]}>
-            <Popup>
-              BajuKawen HQ
-            </Popup>
+            <Popup>BajuKawen HQ</Popup>
           </Marker>
         </MapContainer>
       </div>

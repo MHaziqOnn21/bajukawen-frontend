@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { NavigationLoggedIn } from "@/components/NavigationLoggedIn";
 import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
@@ -8,7 +9,7 @@ import { Product, ProductType } from "@/types/product";
 
 const LoggedInIndex = () => {
   const username = "John";
-
+  
   const allProducts = [
     {
       id: 1,

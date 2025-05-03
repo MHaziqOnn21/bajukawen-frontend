@@ -77,14 +77,14 @@ export const VendorMap: React.FC<VendorMapProps> = ({ selectedLocation = "", onL
         <div className="flex items-center space-x-2">
           <div className="relative">
             <Select
-              value={selectedLocation || ""}
+              value={selectedLocation || "all"}
               onValueChange={(value) => handleLocationSelect(value)}
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Filter by location" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All locations</SelectItem>
+                <SelectItem value="all">All locations</SelectItem>
                 {LOCATIONS.map((location) => (
                   <SelectItem key={location} value={location}>
                     {location}
@@ -106,7 +106,7 @@ export const VendorMap: React.FC<VendorMapProps> = ({ selectedLocation = "", onL
       </div>
       <div className="w-full h-[300px] rounded-lg overflow-hidden">
         <MapContainer 
-          center={[3.1390, 101.6869]} 
+          defaultCenter={[3.1390, 101.6869]} 
           zoom={11} 
           style={{ height: '100%', width: '100%' }} 
           className="z-0"
