@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { NavigationLoggedIn } from "@/components/NavigationLoggedIn";
 import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
@@ -96,7 +95,7 @@ const LoggedInIndex = () => {
       // Filter by product type
       if (filters.productType && filters.productType !== "" && 
           filters.productType !== "all" && 
-          product.type !== filters.productType) {
+          product.type !== filters.productType as any) {
         return false;
       }
       

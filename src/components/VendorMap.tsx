@@ -1,12 +1,25 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import { MapPin, Search } from 'lucide-react';
-import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
-import { Button } from "@/components/ui/button";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import { MapPin } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import L from 'leaflet';
+
+// Fix for Leaflet marker icon issue
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34]
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
 
 export const vendorLocations = [
   { id: 1, name: "Vendor A", lat: 3.1390, lng: 101.6869, address: "Kuala Lumpur" },
@@ -17,80 +30,38 @@ export const vendorLocations = [
 // Extract unique locations for the filter
 const LOCATIONS = [...new Set(vendorLocations.map(vendor => vendor.address))];
 
+// Center map view on filtered vendors or reset to default
+function MapViewUpdater({ filteredVendors }: { filteredVendors: typeof vendorLocations }) {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (filteredVendors.length === 1) {
+      map.setView([filteredVendors[0].lat, filteredVendors[0].lng], 13);
+    } else if (filteredVendors.length > 0) {
+      // Create bounds that include all vendors
+      const bounds = L.latLngBounds(filteredVendors.map(vendor => [vendor.lat, vendor.lng]));
+      map.fitBounds(bounds, { padding: [50, 50] });
+    }
+  }, [filteredVendors, map]);
+  
+  return null;
+}
+
 interface VendorMapProps {
   selectedLocation?: string;
   onLocationChange?: (location: string) => void;
 }
 
 export const VendorMap: React.FC<VendorMapProps> = ({ selectedLocation = "", onLocationChange }) => {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const [mapboxToken, setMapboxToken] = useState("");
-  const [locationSearch, setLocationSearch] = useState("");
-  const [showLocationCommand, setShowLocationCommand] = useState(false);
-  
   // Filter vendors based on selected location
   const filteredVendors = selectedLocation 
     ? vendorLocations.filter(vendor => vendor.address === selectedLocation)
     : vendorLocations;
 
-  useEffect(() => {
-    if (!mapContainer.current || !mapboxToken) return;
-
-    mapboxgl.accessToken = mapboxToken;
-    
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/light-v11',
-      center: [101.6869, 3.1390], // Center on KL
-      zoom: 11
-    });
-
-    // Clear existing markers if any
-    const existingMarkers = document.querySelectorAll('.mapboxgl-marker');
-    existingMarkers.forEach(marker => marker.remove());
-
-    // Add markers for filtered vendors
-    filteredVendors.forEach((vendor) => {
-      const marker = document.createElement('div');
-      marker.className = 'flex items-center justify-center w-8 h-8';
-      
-      const pinElement = document.createElement('div');
-      pinElement.className = 'text-baju-heading';
-      pinElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
-      
-      marker.appendChild(pinElement);
-
-      new mapboxgl.Marker(marker)
-        .setLngLat([vendor.lng, vendor.lat])
-        .setPopup(new mapboxgl.Popup().setHTML(`<h3 class="font-medium">${vendor.name}</h3><p>${vendor.address}</p>`))
-        .addTo(map.current);
-    });
-
-    // Adjust map view if filtered to one location
-    if (filteredVendors.length === 1) {
-      map.current.flyTo({
-        center: [filteredVendors[0].lng, filteredVendors[0].lat],
-        zoom: 13
-      });
-    } else if (filteredVendors.length > 0) {
-      // Reset to view all vendors
-      map.current.flyTo({
-        center: [101.6869, 3.1390],
-        zoom: 11
-      });
-    }
-
-    return () => {
-      map.current?.remove();
-    };
-  }, [mapboxToken, filteredVendors]);
-
   const handleLocationSelect = (location: string) => {
     if (onLocationChange) {
       onLocationChange(location);
     }
-    setShowLocationCommand(false);
   };
 
   const handleClearLocation = () => {
@@ -103,58 +74,63 @@ export const VendorMap: React.FC<VendorMapProps> = ({ selectedLocation = "", onL
     <div className="w-full h-[400px] bg-baju-background rounded-lg border border-baju-input-border p-4 mb-8">
       <div className="text-baju-heading font-semibold mb-4 flex justify-between items-center">
         <span>Vendor Locations</span>
-        {!mapboxToken ? (
-          <input
-            type="text"
-            placeholder="Enter Mapbox token"
-            className="px-3 py-1 border rounded w-full max-w-xs"
-            onChange={(e) => setMapboxToken(e.target.value)}
-          />
-        ) : (
-          <div className="flex items-center space-x-2">
-            <div className="relative">
-              {/* More visible location filter using Select component instead of a button */}
-              <Select
-                value={selectedLocation || ""}
-                onValueChange={(value) => onLocationChange && onLocationChange(value)}
-              >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Filter by location" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="">All locations</SelectItem>
-                  {LOCATIONS.map((location) => (
-                    <SelectItem key={location} value={location}>
-                      {location}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            {selectedLocation && (
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={handleClearLocation}
-              >
-                Clear
-              </Button>
-            )}
+        <div className="flex items-center space-x-2">
+          <div className="relative">
+            <Select
+              value={selectedLocation || ""}
+              onValueChange={(value) => handleLocationSelect(value)}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Filter by location" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="">All locations</SelectItem>
+                {LOCATIONS.map((location) => (
+                  <SelectItem key={location} value={location}>
+                    {location}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-        )}
-      </div>
-      <div ref={mapContainer} className="w-full h-[300px] rounded-lg overflow-hidden" />
-      {!mapboxToken && (
-        <div className="mt-4 text-sm text-baju-subtext text-center">
-          <p className="font-medium">How to integrate Mapbox:</p>
-          <ol className="text-left pl-4 mt-2 list-decimal">
-            <li>Create a Mapbox account at <a href="https://mapbox.com" className="text-blue-500 underline" target="_blank" rel="noopener noreferrer">mapbox.com</a></li>
-            <li>Navigate to your Mapbox account dashboard</li>
-            <li>Find your default public token or create a new one</li>
-            <li>Paste the token in the field above</li>
-          </ol>
+          {selectedLocation && (
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={handleClearLocation}
+            >
+              Clear
+            </Button>
+          )}
         </div>
-      )}
+      </div>
+      <div className="w-full h-[300px] rounded-lg overflow-hidden">
+        <MapContainer 
+          center={[3.1390, 101.6869]} 
+          zoom={11} 
+          style={{ height: '100%', width: '100%' }} 
+          className="z-0"
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {filteredVendors.map((vendor) => (
+            <Marker 
+              key={vendor.id} 
+              position={[vendor.lat, vendor.lng]}
+            >
+              <Popup>
+                <div>
+                  <h3 className="font-medium">{vendor.name}</h3>
+                  <p>{vendor.address}</p>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+          <MapViewUpdater filteredVendors={filteredVendors} />
+        </MapContainer>
+      </div>
     </div>
   );
 };

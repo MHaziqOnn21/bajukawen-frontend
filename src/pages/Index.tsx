@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
@@ -94,7 +93,7 @@ const Index = () => {
       // Filter by product type
       if (filters.productType && filters.productType !== "" && 
           filters.productType !== "all" && 
-          product.type !== filters.productType) {
+          product.type !== filters.productType as any) {
         return false;
       }
       
