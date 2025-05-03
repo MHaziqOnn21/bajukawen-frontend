@@ -13,7 +13,7 @@ import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
-import { Product, ProductImage } from "@/types/product";
+import { Product, ProductImage, ProductType } from "@/types/product";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -132,6 +132,7 @@ const ProductDetails = () => {
       size: "XS - XXL (Customizable)",
       vendor: "Chic Weddings Boutique",
       theme: "Modern Simplicity",
+      type: "set",
       images: [
         {
           id: 1,
@@ -172,6 +173,7 @@ const ProductDetails = () => {
       size: "XS - XXL (Customizable)",
       vendor: "Floral Dreams Bridal",
       theme: "Ethereal Garden",
+      type: "set",
       images: [
         {
           id: 1,
@@ -218,6 +220,7 @@ const ProductDetails = () => {
       size: "XS - XXL (Customizable)",
       vendor: "Vintage Vows Boutique",
       theme: "Classic Vintage",
+      type: "set",
       images: [
         {
           id: 1,
@@ -264,6 +267,7 @@ const ProductDetails = () => {
       size: "XS - XXL (Customizable)",
       vendor: "Coastal Ceremonies",
       theme: "Beach Romance",
+      type: "set",
       images: [
         {
           id: 1,
@@ -310,6 +314,7 @@ const ProductDetails = () => {
       size: "XS - XXL (Customizable)",
       vendor: "Royal Wedding Emporium",
       theme: "Royal Elegance",
+      type: "set",
       images: [
         {
           id: 1,
@@ -356,6 +361,7 @@ const ProductDetails = () => {
       size: "XS - XXL (Customizable)",
       vendor: "Boho Bridal Co",
       theme: "Bohemian Nature",
+      type: "set",
       images: [
         {
           id: 1,
@@ -402,6 +408,7 @@ const ProductDetails = () => {
       size: "XS - XXL (Customizable)",
       vendor: "Metropolitan Wedding Studio",
       theme: "Modern Urban",
+      type: "set",
       images: [
         {
           id: 1,
