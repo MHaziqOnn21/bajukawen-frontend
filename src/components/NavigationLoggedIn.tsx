@@ -34,9 +34,11 @@ export const NavigationLoggedIn = ({ username }: NavigationLoggedInProps) => {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Button variant="ghost" size="icon" className="text-baju-heading">
-              <ShoppingCart className="h-5 w-5" />
-            </Button>
+            <Link to="/cart">
+              <Button variant="ghost" size="icon" className="text-baju-heading">
+                <ShoppingCart className="h-5 w-5" />
+              </Button>
+            </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>

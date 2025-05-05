@@ -28,7 +28,7 @@ const FooterMap = () => {
     <div className="w-full">
       <div className="w-full h-[120px] rounded-md border border-baju-input-border overflow-hidden" style={{ minHeight: "100px" }}>
         <MapContainer 
-          defaultCenter={[addressCoords.lat, addressCoords.lng]} 
+          center={[addressCoords.lat, addressCoords.lng]} 
           zoom={15} 
           style={{ height: '100%', width: '100%' }}
           zoomControl={false}

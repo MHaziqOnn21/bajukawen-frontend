@@ -1,7 +1,7 @@
 
 import { ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -9,6 +9,12 @@ import {
 } from "@/components/ui/navigation-menu";
 
 export const Navigation = () => {
+  const navigate = useNavigate();
+  
+  const handleCartClick = () => {
+    navigate("/login");
+  };
+  
   return (
     <div className="flex items-center justify-between py-4">
       <Link 
@@ -28,7 +34,12 @@ export const Navigation = () => {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Button variant="ghost" size="icon" className="text-baju-heading">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="text-baju-heading"
+              onClick={handleCartClick}
+            >
               <ShoppingCart className="h-5 w-5" />
             </Button>
           </NavigationMenuItem>
