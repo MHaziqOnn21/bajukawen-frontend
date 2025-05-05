@@ -1,7 +1,7 @@
 
 import { ShoppingCart, User } from "lucide-react";
 import { Button } from "./ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -13,6 +13,9 @@ type NavigationLoggedInProps = {
 };
 
 export const NavigationLoggedIn = ({ username }: NavigationLoggedInProps) => {
+  const location = useLocation();
+  const isCartPage = location.pathname === "/cart";
+  
   return (
     <div className="flex items-center justify-between py-4">
       <Link 
@@ -33,13 +36,15 @@ export const NavigationLoggedIn = ({ username }: NavigationLoggedInProps) => {
               {username}
             </Link>
           </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link to="/cart">
-              <Button variant="ghost" size="icon" className="text-baju-heading">
-                <ShoppingCart className="h-5 w-5" />
-              </Button>
-            </Link>
-          </NavigationMenuItem>
+          {!isCartPage && (
+            <NavigationMenuItem>
+              <Link to="/cart">
+                <Button variant="ghost" size="icon" className="text-baju-heading">
+                  <ShoppingCart className="h-5 w-5" />
+                </Button>
+              </Link>
+            </NavigationMenuItem>
+          )}
         </NavigationMenuList>
       </NavigationMenu>
     </div>

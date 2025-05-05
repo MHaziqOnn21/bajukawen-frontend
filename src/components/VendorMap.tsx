@@ -1,8 +1,7 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { MapPin } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import L from 'leaflet';
@@ -31,7 +30,7 @@ export const vendorLocations = [
 const LOCATIONS = [...new Set(vendorLocations.map(vendor => vendor.address))];
 
 // Center map view on filtered vendors or reset to default
-function MapViewUpdater({ filteredVendors }: { filteredVendors: typeof vendorLocations }) {
+function MapViewUpdater({ filteredVendors }) {
   const map = useMap();
   
   useEffect(() => {
@@ -47,36 +46,31 @@ function MapViewUpdater({ filteredVendors }: { filteredVendors: typeof vendorLoc
   return null;
 }
 
-interface VendorMapProps {
-  selectedLocation?: string;
-  onLocationChange?: (location: string) => void;
-}
-
-export const VendorMap: React.FC<VendorMapProps> = ({ selectedLocation = "", onLocationChange }) => {
+export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
   // Filter vendors based on selected location
   const filteredVendors = selectedLocation 
-    ? vendorLocations.filter(vendor => vendor.address === selectedLocation)
+    ? vendorLocations.filter(vendor => vendor.address === selectedLocation) 
     : vendorLocations;
-
-  const handleLocationSelect = (location: string) => {
+  
+  const handleLocationSelect = (location) => {
     if (onLocationChange) {
       onLocationChange(location);
     }
   };
-
+  
   const handleClearLocation = () => {
     if (onLocationChange) {
       onLocationChange("");
     }
   };
-
+  
   return (
     <div className="w-full h-[400px] bg-baju-background rounded-lg border border-baju-input-border p-4 mb-8">
       <div className="text-baju-heading font-semibold mb-4 flex justify-between items-center">
         <span>Vendor Locations</span>
         <div className="flex items-center space-x-2">
           <div className="relative">
-            <Select
+            <Select 
               value={selectedLocation || "all"}
               onValueChange={(value) => handleLocationSelect(value)}
             >
@@ -85,7 +79,7 @@ export const VendorMap: React.FC<VendorMapProps> = ({ selectedLocation = "", onL
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All locations</SelectItem>
-                {LOCATIONS.map((location) => (
+                {LOCATIONS.map(location => (
                   <SelectItem key={location} value={location}>
                     {location}
                   </SelectItem>
@@ -96,7 +90,7 @@ export const VendorMap: React.FC<VendorMapProps> = ({ selectedLocation = "", onL
           {selectedLocation && (
             <Button 
               variant="outline" 
-              size="sm"
+              size="sm" 
               onClick={handleClearLocation}
             >
               Clear
@@ -106,16 +100,16 @@ export const VendorMap: React.FC<VendorMapProps> = ({ selectedLocation = "", onL
       </div>
       <div className="w-full h-[300px] rounded-lg overflow-hidden">
         <MapContainer 
-          defaultCenter={[3.1390, 101.6869]} 
+          center={[3.1390, 101.6869]} 
           zoom={11} 
           style={{ height: '100%', width: '100%' }} 
           className="z-0"
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {filteredVendors.map((vendor) => (
+          {filteredVendors.map(vendor => (
             <Marker 
               key={vendor.id} 
               position={[vendor.lat, vendor.lng]}
