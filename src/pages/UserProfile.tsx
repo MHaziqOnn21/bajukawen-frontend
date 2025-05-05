@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { Menu, User, ShoppingBag, MapPin, CreditCard, LogOut, Key } from "lucide-react";
+import { Menu, User, ShoppingBag, MapPin, CreditCard, LogOut, Key, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ProfilePicture } from "@/components/ProfilePicture";
@@ -34,61 +35,71 @@ export default function UserProfile() {
               BajuKawen.com
             </Link>
             
-            <div className="md:hidden">
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Menu className="h-6 w-6" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left">
-                  <nav className="flex flex-col space-y-4 mt-6">
-                    <Button 
-                      variant={activeSection === "personal" ? "default" : "ghost"} 
-                      className="justify-start" 
-                      onClick={() => setActiveSection("personal")}
-                    >
-                      <User className="mr-2 h-4 w-4" /> Personal Information
+            <div className="flex items-center space-x-4">
+              <Link
+                to="/cart"
+                className="text-baju-heading hover:opacity-80 transition-opacity"
+                aria-label="View shopping cart"
+              >
+                <ShoppingCart className="h-5 w-5" />
+              </Link>
+              
+              <div className="md:hidden">
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <Menu className="h-6 w-6" />
                     </Button>
-                    <Button 
-                      variant={activeSection === "orders" ? "default" : "ghost"} 
-                      className="justify-start" 
-                      onClick={() => setActiveSection("orders")}
-                    >
-                      <ShoppingBag className="mr-2 h-4 w-4" /> My Orders
-                    </Button>
-                    <Button 
-                      variant={activeSection === "address" ? "default" : "ghost"} 
-                      className="justify-start" 
-                      onClick={() => setActiveSection("address")}
-                    >
-                      <MapPin className="mr-2 h-4 w-4" /> Manage Address
-                    </Button>
-                    <Button 
-                      variant={activeSection === "payment" ? "default" : "ghost"} 
-                      className="justify-start" 
-                      onClick={() => setActiveSection("payment")}
-                    >
-                      <CreditCard className="mr-2 h-4 w-4" /> Payment Method
-                    </Button>
-                    <Button 
-                      variant={activeSection === "password" ? "default" : "ghost"} 
-                      className="justify-start" 
-                      onClick={() => setActiveSection("password")}
-                    >
-                      <Key className="mr-2 h-4 w-4" /> Password Manager
-                    </Button>
-                    <Separator />
-                    <Button 
-                      variant="ghost" 
-                      className="justify-start text-red-500 hover:text-red-700 hover:bg-red-50"
-                      onClick={handleLogout}
-                    >
-                      <LogOut className="mr-2 h-4 w-4" /> Logout
-                    </Button>
-                  </nav>
-                </SheetContent>
-              </Sheet>
+                  </SheetTrigger>
+                  <SheetContent side="left">
+                    <nav className="flex flex-col space-y-4 mt-6">
+                      <Button 
+                        variant={activeSection === "personal" ? "default" : "ghost"} 
+                        className="justify-start" 
+                        onClick={() => setActiveSection("personal")}
+                      >
+                        <User className="mr-2 h-4 w-4" /> Personal Information
+                      </Button>
+                      <Button 
+                        variant={activeSection === "orders" ? "default" : "ghost"} 
+                        className="justify-start" 
+                        onClick={() => setActiveSection("orders")}
+                      >
+                        <ShoppingBag className="mr-2 h-4 w-4" /> My Orders
+                      </Button>
+                      <Button 
+                        variant={activeSection === "address" ? "default" : "ghost"} 
+                        className="justify-start" 
+                        onClick={() => setActiveSection("address")}
+                      >
+                        <MapPin className="mr-2 h-4 w-4" /> Manage Address
+                      </Button>
+                      <Button 
+                        variant={activeSection === "payment" ? "default" : "ghost"} 
+                        className="justify-start" 
+                        onClick={() => setActiveSection("payment")}
+                      >
+                        <CreditCard className="mr-2 h-4 w-4" /> Payment Method
+                      </Button>
+                      <Button 
+                        variant={activeSection === "password" ? "default" : "ghost"} 
+                        className="justify-start" 
+                        onClick={() => setActiveSection("password")}
+                      >
+                        <Key className="mr-2 h-4 w-4" /> Password Manager
+                      </Button>
+                      <Separator />
+                      <Button 
+                        variant="ghost" 
+                        className="justify-start text-red-500 hover:text-red-700 hover:bg-red-50"
+                        onClick={handleLogout}
+                      >
+                        <LogOut className="mr-2 h-4 w-4" /> Logout
+                      </Button>
+                    </nav>
+                  </SheetContent>
+                </Sheet>
+              </div>
             </div>
           </div>
         </div>
