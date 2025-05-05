@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger
 } from "@/components/ui/accordion";
-import { Ruler } from "lucide-react";
+import { Ruler, Info } from "lucide-react";
 
 interface ProductInfoProps {
   product: Product;
@@ -51,6 +51,10 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
     "XXL": { chest: "110-115", waist: "95-100", hip: "110-115" }
   };
 
+  // Calculate deposit based on price (30% of the rental price)
+  const rentalPrice = product.price.split(" / ")[0].replace("MYR ", "");
+  const deposit = Math.round(parseInt(rentalPrice) * 0.3);
+
   return (
     <div className="mt-8 space-y-6">
       <div>
@@ -68,6 +72,20 @@ export const ProductInfo: React.FC<ProductInfoProps> = ({
           >
             {selectedDate ? "Available for Selected Date" : product.availability}
           </Badge>
+        </div>
+
+        <div className="mt-3 flex items-start gap-3">
+          <div>
+            <p className="text-lg font-medium text-baju-subtext">Deposit</p>
+            <p className="text-xl font-medium text-baju-heading">MYR {deposit}</p>
+          </div>
+          <div className="flex items-start mt-1 p-3 bg-gray-50 rounded-lg border border-gray-200">
+            <Info className="h-5 w-5 text-amber-600 mr-2 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-gray-700">
+              <span className="font-medium">Deposit Policy:</span> Full deposit will be returned if attire is returned in its original condition. 
+              Any damage costs will be deducted from the deposit amount based on severity. Severe damage may incur additional charges.
+            </p>
+          </div>
         </div>
       </div>
 
