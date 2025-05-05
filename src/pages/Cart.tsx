@@ -4,7 +4,7 @@ import { NavigationLoggedIn } from "@/components/NavigationLoggedIn";
 import { Footer } from "@/components/Footer";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Trash2, Calendar, Package, MinusCircle, PlusCircle } from "lucide-react";
+import { Trash2, Calendar, Package, MinusCircle, PlusCircle, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 // Mock cart items - in a real app, this would come from state management or API
@@ -49,10 +49,16 @@ const Cart = () => {
   // Calculate subtotal
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   
+  // Calculate deposit (30% of each item price)
+  const depositTotal = cartItems.reduce((sum, item) => {
+    const itemDeposit = Math.round(item.price * 0.3);
+    return sum + (itemDeposit * item.quantity);
+  }, 0);
+  
   // Calculate tax (6%)
   const tax = subtotal * 0.06;
   
-  // Calculate total
+  // Calculate total (subtotal + tax + deposit)
   const total = subtotal + tax;
 
   const handleQuantityChange = (itemId: number, change: number) => {
@@ -68,6 +74,11 @@ const Cart = () => {
   const handleCheckout = () => {
     // In a real app, this would navigate to checkout
     console.log("Proceeding to checkout");
+  };
+
+  // Calculate deposit for an individual item
+  const calculateItemDeposit = (price: number) => {
+    return Math.round(price * 0.3);
   };
 
   return (
@@ -97,62 +108,69 @@ const Cart = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {cartItems.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell>
-                          <div className="h-20 w-20 rounded-md overflow-hidden">
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="h-full w-full object-cover"
-                            />
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div>
-                            <p className="font-medium">{item.name}</p>
-                            <div className="text-sm text-baju-subtext mt-1 flex items-center">
-                              <Calendar className="h-3 w-3 mr-1" /> 
-                              <span>{item.bookingDate} to {item.returnDate}</span>
+                    {cartItems.map((item) => {
+                      const itemDeposit = calculateItemDeposit(item.price);
+                      return (
+                        <TableRow key={item.id}>
+                          <TableCell>
+                            <div className="h-20 w-20 rounded-md overflow-hidden">
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className="h-full w-full object-cover"
+                              />
                             </div>
-                            <div className="text-sm text-baju-subtext mt-1 flex items-center">
-                              <Package className="h-3 w-3 mr-1" /> 
-                              <span>{item.type === "set" ? "Complete Set" : item.type === "bride" ? "Bride Attire" : "Groom Attire"}</span>
+                          </TableCell>
+                          <TableCell>
+                            <div>
+                              <p className="font-medium">{item.name}</p>
+                              <div className="text-sm text-baju-subtext mt-1 flex items-center">
+                                <Calendar className="h-3 w-3 mr-1" /> 
+                                <span>{item.bookingDate} to {item.returnDate}</span>
+                              </div>
+                              <div className="text-sm text-baju-subtext mt-1 flex items-center">
+                                <Package className="h-3 w-3 mr-1" /> 
+                                <span>{item.type === "set" ? "Complete Set" : item.type === "bride" ? "Bride Attire" : "Groom Attire"}</span>
+                              </div>
+                              <div className="text-sm text-amber-600 mt-1 flex items-center">
+                                <Info className="h-3 w-3 mr-1" />
+                                <span>Deposit: MYR {itemDeposit.toLocaleString()}</span>
+                              </div>
                             </div>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-right">MYR {item.price.toLocaleString()}</TableCell>
-                        <TableCell className="text-center">
-                          <div className="flex items-center justify-center">
+                          </TableCell>
+                          <TableCell className="text-right">MYR {item.price.toLocaleString()}</TableCell>
+                          <TableCell className="text-center">
+                            <div className="flex items-center justify-center">
+                              <button 
+                                onClick={() => handleQuantityChange(item.id, -1)}
+                                disabled={item.quantity <= 1}
+                                className="text-baju-subtext hover:text-baju-heading disabled:opacity-30"
+                              >
+                                <MinusCircle className="h-4 w-4" />
+                              </button>
+                              <span className="mx-2 w-6 text-center">{item.quantity}</span>
+                              <button 
+                                onClick={() => handleQuantityChange(item.id, 1)}
+                                className="text-baju-subtext hover:text-baju-heading"
+                              >
+                                <PlusCircle className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-right font-medium">
+                            MYR {(item.price * item.quantity).toLocaleString()}
+                          </TableCell>
+                          <TableCell>
                             <button 
-                              onClick={() => handleQuantityChange(item.id, -1)}
-                              disabled={item.quantity <= 1}
-                              className="text-baju-subtext hover:text-baju-heading disabled:opacity-30"
+                              onClick={() => handleRemoveItem(item.id)}
+                              className="text-baju-subtext hover:text-red-500"
                             >
-                              <MinusCircle className="h-4 w-4" />
+                              <Trash2 className="h-4 w-4" />
                             </button>
-                            <span className="mx-2 w-6 text-center">{item.quantity}</span>
-                            <button 
-                              onClick={() => handleQuantityChange(item.id, 1)}
-                              className="text-baju-subtext hover:text-baju-heading"
-                            >
-                              <PlusCircle className="h-4 w-4" />
-                            </button>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-right font-medium">
-                          MYR {(item.price * item.quantity).toLocaleString()}
-                        </TableCell>
-                        <TableCell>
-                          <button 
-                            onClick={() => handleRemoveItem(item.id)}
-                            className="text-baju-subtext hover:text-red-500"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </div>
@@ -170,11 +188,21 @@ const Cart = () => {
                     <span className="text-baju-subtext">Tax (6%)</span>
                     <span className="text-baju-heading">MYR {tax.toLocaleString()}</span>
                   </div>
+                  <div className="flex justify-between text-amber-600">
+                    <span className="flex items-center">
+                      <Info className="h-4 w-4 mr-1" />
+                      Deposit (Refundable)
+                    </span>
+                    <span>MYR {depositTotal.toLocaleString()}</span>
+                  </div>
                   <div className="border-t border-gray-200 pt-3 mt-3">
                     <div className="flex justify-between font-semibold">
                       <span>Total</span>
-                      <span className="text-baju-heading">MYR {total.toLocaleString()}</span>
+                      <span className="text-baju-heading">MYR {(total + depositTotal).toLocaleString()}</span>
                     </div>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Includes rental fee, tax, and refundable deposit
+                    </p>
                   </div>
                 </div>
                 <Button 
