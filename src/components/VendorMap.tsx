@@ -1,11 +1,9 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, X } from "lucide-react";
 import L from 'leaflet';
 
 // Fix for Leaflet marker icon issue
@@ -23,13 +21,13 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 export const vendorLocations = [
-  { id: 1, name: "Elegant Bridal House", lat: 3.1390, lng: 101.6869, address: "Kuala Lumpur" },
-  { id: 2, name: "Modern Menswear", lat: 3.0495, lng: 101.5853, address: "Subang" },
+  { id: 1, name: "Vendor A", lat: 3.1390, lng: 101.6869, address: "Kuala Lumpur" },
+  { id: 2, name: "Vendor B", lat: 3.0495, lng: 101.5853, address: "Subang" },
   { id: 3, name: "Vendor C", lat: 3.1570, lng: 101.7117, address: "Ampang" }
 ];
 
 // Extract unique locations for the filter
-const PINNED_LOCATIONS = [...new Set(vendorLocations.map(vendor => vendor.address))];
+const LOCATIONS = [...new Set(vendorLocations.map(vendor => vendor.address))];
 
 // Center map view on filtered vendors or reset to default
 function MapViewUpdater({ filteredVendors }) {
@@ -49,96 +47,55 @@ function MapViewUpdater({ filteredVendors }) {
 }
 
 export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
-  const [searchInput, setSearchInput] = useState("");
-  const [isSelectOpen, setIsSelectOpen] = useState(false);
-  
-  // Filter vendors based on selected location or search input
+  // Filter vendors based on selected location
   const filteredVendors = selectedLocation 
     ? vendorLocations.filter(vendor => vendor.address === selectedLocation) 
-    : searchInput
-      ? vendorLocations.filter(vendor => 
-          vendor.address.toLowerCase().includes(searchInput.toLowerCase()) ||
-          vendor.name.toLowerCase().includes(searchInput.toLowerCase())
-        )
-      : vendorLocations;
+    : vendorLocations;
   
   const handleLocationSelect = (location) => {
     if (onLocationChange) {
       onLocationChange(location);
-      setSearchInput("");
-    }
-  };
-  
-  const handleSearchInput = (e) => {
-    setSearchInput(e.target.value);
-    if (onLocationChange && e.target.value) {
-      onLocationChange("");
     }
   };
   
   const handleClearLocation = () => {
     if (onLocationChange) {
       onLocationChange("");
-      setSearchInput("");
     }
   };
   
   return (
     <div className="w-full h-[400px] bg-baju-background rounded-lg border border-baju-input-border p-4 mb-8">
-      <div className="text-baju-heading font-semibold mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+      <div className="text-baju-heading font-semibold mb-4 flex justify-between items-center">
         <span>Vendor Locations</span>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-          <div className="relative w-full sm:w-auto">
-            <Input
-              type="text"
-              placeholder="Search location or vendor..."
-              value={searchInput}
-              onChange={handleSearchInput}
-              className="w-full sm:w-[240px]"
-            />
-            {searchInput && (
-              <button 
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                onClick={() => {
-                  setSearchInput("");
-                  handleClearLocation();
-                }}
-              >
-                <X size={16} />
-              </button>
-            )}
+        <div className="flex items-center space-x-2">
+          <div className="relative">
+            <Select 
+              value={selectedLocation || "all"}
+              onValueChange={(value) => handleLocationSelect(value)}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Filter by location" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All locations</SelectItem>
+                {LOCATIONS.map(location => (
+                  <SelectItem key={location} value={location}>
+                    {location}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          
-          <div className="flex items-center space-x-2 w-full sm:w-auto">
-            <div className="relative">
-              <Select 
-                value={selectedLocation || ""}
-                onValueChange={(value) => handleLocationSelect(value)}
-                open={isSelectOpen}
-                onOpenChange={setIsSelectOpen}
-              >
-                <SelectTrigger className="w-full sm:w-[180px]">
-                  <SelectValue placeholder="Pinned locations" />
-                </SelectTrigger>
-                <SelectContent>
-                  {PINNED_LOCATIONS.map(location => (
-                    <SelectItem key={location} value={location}>
-                      {location}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            {selectedLocation && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handleClearLocation}
-              >
-                Clear
-              </Button>
-            )}
-          </div>
+          {selectedLocation && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleClearLocation}
+            >
+              Clear
+            </Button>
+          )}
         </div>
       </div>
       <div className="w-full h-[300px] rounded-lg overflow-hidden">
@@ -149,6 +106,7 @@ export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
           className="z-0"
         >
           <TileLayer
+            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {filteredVendors.map(vendor => (
