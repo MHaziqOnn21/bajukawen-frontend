@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import {
@@ -136,7 +135,7 @@ export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
       </div>
       <div className="w-full h-[300px] rounded-lg overflow-hidden">
         <MapContainer 
-          defaultCenter={[3.1390, 101.6869]} 
+          center={[3.1390, 101.6869]} 
           zoom={11} 
           style={{ height: '100%', width: '100%' }} 
           className="z-0"
