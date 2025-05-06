@@ -1,196 +1,221 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
-import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
-import { ProductGrid } from "@/components/ProductGrid";
-import { VendorMap } from "@/components/VendorMap";
 import { Footer } from "@/components/Footer";
-import { Product, ProductType } from "@/types/product";
+import { ProductCarousel } from "@/components/ProductCarousel";
+import { FiltersPanel } from "@/components/FiltersPanel";
+import { ProductGrid } from "@/components/ProductGrid";
+import { CustomerReviews } from "@/components/CustomerReviews";
+import { VendorMap } from "@/components/VendorMap";
+import { ProductType } from "@/types/product";
 
-const Index = () => {
-  const allProducts = [
-    {
-      id: 1,
-      name: "Royal Elegance Collection",
-      description: "A stunning combination of traditional elegance and modern design. The bride dress features intricate lace work with a sweetheart neckline and full flowing skirt. The groom's attire complements with a sophisticated cut and subtle matching details. Perfect for a grand traditional wedding ceremony.",
-      price: "MYR 2,800 / day",
-      availability: "In Stock",
-      brideImage: "https://images.unsplash.com/photo-1594552072238-5c4cefc1d033?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      groomImage: "https://images.unsplash.com/photo-1596474220362-7a329973cb35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      color: "Ivory and Champagne",
-      material: "Premium Lace, Satin, and Tulle",
-      size: "XS - XXL (Customizable)",
-      vendor: "Elegant Bridal House",
-      theme: "Traditional Elegance",
-      type: "set" as const,
-      images: [
-        {
-          id: 1,
-          url: "https://images.unsplash.com/photo-1594552072238-5c4cefc1d033?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-          alt: "Bride front view",
-          type: "bride" as const
-        },
-        {
-          id: 2,
-          url: "https://images.unsplash.com/photo-1596474220362-7a329973cb35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-          alt: "Groom front view",
-          type: "groom" as const
-        }
-      ]
-    },
-    {
-      id: 2,
-      name: "Classic Bridal Gown",
-      description: "An elegant bridal gown with intricate lace details and a sweeping train.",
-      price: "MYR 1,800 / day",
-      availability: "In Stock",
-      brideImage: "https://images.unsplash.com/photo-1566114725077-855347e7b6e3?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      groomImage: "",
-      color: "Pure White",
-      material: "Premium Lace and Silk",
-      size: "XS - XXL (Customizable)",
-      vendor: "Elegant Bridal House",
-      theme: "Classic",
-      type: "bride" as const,
-      images: [
-        {
-          id: 1,
-          url: "https://images.unsplash.com/photo-1566114725077-855347e7b6e3?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-          alt: "Bride front view",
-          type: "bride" as const
-        }
-      ]
-    },
-    {
-      id: 3,
-      name: "Modern Groom Suit",
-      description: "A contemporary suit featuring clean lines and premium tailoring.",
-      price: "MYR 1,500 / day",
-      availability: "In Stock",
-      brideImage: "",
-      groomImage: "https://images.unsplash.com/photo-1593030103066-0093718efeb9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      color: "Charcoal Grey",
-      material: "Italian Wool",
-      size: "XS - XXL (Customizable)",
-      vendor: "Modern Menswear",
-      theme: "Contemporary",
-      type: "groom" as const,
-      images: [
-        {
-          id: 1,
-          url: "https://images.unsplash.com/photo-1593030103066-0093718efeb9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-          alt: "Groom front view",
-          type: "groom" as const
-        }
-      ]
+// Mock products data
+const products = [
+  {
+    id: 1,
+    name: "Elegant Wedding Dress",
+    price: 850,
+    imageUrl: "/images/dress1.jpg",
+    type: "Dress",
+    location: "Kuala Lumpur",
+  },
+  {
+    id: 2,
+    name: "Classic Tuxedo Suit",
+    price: 600,
+    imageUrl: "/images/suit1.jpg",
+    type: "Suit",
+    location: "Subang",
+  },
+  {
+    id: 3,
+    name: "Designer Bridal Gown",
+    price: 1200,
+    imageUrl: "/images/dress2.jpg",
+    type: "Dress",
+    location: "Ampang",
+  },
+  {
+    id: 4,
+    name: "Slim Fit Men's Suit",
+    price: 700,
+    imageUrl: "/images/suit2.jpg",
+    type: "Suit",
+    location: "Petaling Jaya",
+  },
+  {
+    id: 5,
+    name: "Lace Wedding Dress",
+    price: 950,
+    imageUrl: "/images/dress3.jpg",
+    type: "Dress",
+    location: "Shah Alam",
+  },
+  {
+    id: 6,
+    name: "Formal Black Suit",
+    price: 650,
+    imageUrl: "/images/suit3.jpg",
+    type: "Suit",
+    location: "Kuala Lumpur",
+  },
+  {
+    id: 7,
+    name: "Satin Bridal Dress",
+    price: 1100,
+    imageUrl: "/images/dress4.jpg",
+    type: "Dress",
+    location: "Subang",
+  },
+  {
+    id: 8,
+    name: "Modern Cut Suit",
+    price: 750,
+    imageUrl: "/images/suit4.jpg",
+    type: "Suit",
+    location: "Ampang",
+  },
+  {
+    id: 9,
+    name: "Beaded Wedding Gown",
+    price: 1300,
+    imageUrl: "/images/dress5.jpg",
+    type: "Dress",
+    location: "Petaling Jaya",
+  },
+  {
+    id: 10,
+    name: "Grey Business Suit",
+    price: 800,
+    imageUrl: "/images/suit5.jpg",
+    type: "Suit",
+    location: "Shah Alam",
+  },
+];
+
+// Filter function for products
+function getFilteredProducts(
+  products,
+  priceRange,
+  productType,
+  searchQuery,
+  location
+) {
+  return products.filter((product) => {
+    // Price filter
+    if (
+      priceRange.length > 0 &&
+      (product.price < priceRange[0] || product.price > priceRange[1])
+    ) {
+      return false;
     }
-  ];
 
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(allProducts);
-  const [selectedLocation, setSelectedLocation] = useState("");
+    // Location filter
+    if (
+      location &&
+      product.location &&
+      !product.location.toLowerCase().includes(location.toLowerCase())
+    ) {
+      return false;
+    }
 
-  const handleApplyFilters = (filters: FilterOptions) => {
-    const filtered = allProducts.filter(product => {
-      // Filter by product type
-      if (filters.productType && 
-          filters.productType !== "" && 
-          filters.productType !== "all" && 
-          product.type !== filters.productType as ProductType) {
-        return false;
-      }
-      
-      // Filter by vendor
-      if (filters.vendor && !product.vendor.toLowerCase().includes(filters.vendor.toLowerCase())) {
-        return false;
-      }
-      
-      // Filter by theme
-      if (filters.theme && filters.theme !== "" && 
-          filters.theme !== "all" && 
-          !product.theme.toLowerCase().includes(filters.theme.toLowerCase())) {
-        return false;
-      }
-      
-      // Filter by color
-      if (filters.color && filters.color !== "" && 
-          filters.color !== "all" && 
-          !product.color.toLowerCase().includes(filters.color.toLowerCase())) {
-        return false;
-      }
-      
-      // Filter by price (assuming price is in format "MYR X,XXX / day")
-      if (filters.priceRange[0] > 0) {
-        const priceMatch = product.price.match(/MYR\s+([\d,]+)/);
-        if (priceMatch) {
-          const price = parseInt(priceMatch[1].replace(/,/g, ''));
-          if (price < filters.priceRange[0]) {
-            return false;
-          }
-        }
-      }
-      
-      // Filter by size
-      if (filters.sizes.length > 0) {
-        // This is simplified logic since we don't have detailed size data
-        // In a real app, you might have specific sizes for each product
-        const productSizes = product.size.split(', ');
-        const hasSize = filters.sizes.some(size => 
-          productSizes.includes(size) || product.size.includes("Customizable")
-        );
-        
-        if (!hasSize) {
-          return false;
-        }
-      }
-      
-      return true;
-    });
-    
-    setFilteredProducts(filtered);
-  };
+    // Type filter
+    if (
+      productType !== "" &&
+      productType !== "all" &&
+      product.type !== productType
+    ) {
+      return false;
+    }
 
-  // Handle location changes from the VendorMap component
-  const handleLocationChange = (location: string) => {
-    setSelectedLocation(location);
-    
-    // Filter products by vendor location if a location is selected
-    if (location && location !== "") {
-      const vendorsInLocation = location.toLowerCase();
-      const filtered = allProducts.filter(product => 
-        product.vendor.toLowerCase().includes(vendorsInLocation)
-      );
-      setFilteredProducts(filtered);
-    } else {
-      // If no location is selected, show all products
-      setFilteredProducts(allProducts);
+    // Search filter
+    if (
+      searchQuery &&
+      !product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    ) {
+      return false;
+    }
+
+    return true;
+  });
+}
+
+export default function Index() {
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [productType, setProductType] = useState<ProductType | string>("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [location, setLocation] = useState("");
+
+  const filteredProducts = getFilteredProducts(
+    products,
+    priceRange,
+    productType,
+    searchQuery,
+    location
+  );
+
+  // Filter products function
+  const handleFilterChange = (filterType, value) => {
+    switch (filterType) {
+      case "price":
+        setPriceRange(value);
+        break;
+      case "type":
+        setProductType(value);
+        break;
+      case "search":
+        setSearchQuery(value);
+        break;
+      case "location":
+        setLocation(value);
+        break;
+      default:
+        break;
     }
   };
 
   return (
     <div className="min-h-screen bg-baju-background">
-      <header className="bg-header-gradient shadow-sm">
-        <div className="container mx-auto px-4">
-          <Navigation />
-        </div>
-      </header>
+      <Navigation />
 
       <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-1">
-            <FiltersPanel onApplyFilters={handleApplyFilters} />
-          </div>
-          <div className="md:col-span-3 space-y-8">
-            <VendorMap 
-              selectedLocation={selectedLocation}
-              onLocationChange={handleLocationChange}
-            />
-            <ProductGrid products={filteredProducts} />
-          </div>
-        </div>
+        <section className="mb-12">
+          <ProductCarousel />
+        </section>
+
+        <section className="mb-12">
+          <FiltersPanel
+            priceRange={priceRange}
+            productType={productType as ProductType}
+            searchQuery={searchQuery}
+            location={location}
+            onFilterChange={handleFilterChange}
+          />
+        </section>
+
+        <section className="mb-16">
+          <h2 className="text-2xl font-semibold text-baju-heading mb-6">
+            {searchQuery
+              ? `Search Results for "${searchQuery}"`
+              : productType && productType !== ""
+                ? `${productType === "all" ? "All" : productType} Products`
+                : "Featured Products"}
+          </h2>
+          <ProductGrid products={filteredProducts} />
+        </section>
+
+        <section className="mb-16">
+          <h2 className="text-2xl font-semibold text-baju-heading mb-6">
+            Our Locations
+          </h2>
+          <VendorMap selectedLocation={location} onLocationChange={(value) => handleFilterChange("location", value)} />
+        </section>
+
+        <section>
+          <CustomerReviews />
+        </section>
       </main>
 
       <Footer />
     </div>
   );
-};
-
-export default Index;
+}

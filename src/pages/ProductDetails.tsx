@@ -447,7 +447,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const product = products.find(p => p.id === Number(id));
     if (product) {
-      setSelectedProduct(product);
+      setSelectedProduct({...product, type: product.type || "Dress"});
       if (product.color) {
         setSelectedColor(product.color.split(" and ")[0].trim());
       }

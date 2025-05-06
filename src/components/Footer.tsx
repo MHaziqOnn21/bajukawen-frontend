@@ -1,6 +1,6 @@
 
 import { Mail, Phone, Instagram, MapPin } from "lucide-react";
-import FooterMap from "./FooterMap";
+import { FooterMap } from "./FooterMap";
 
 export const Footer = () => {
   return (
