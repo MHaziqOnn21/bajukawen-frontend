@@ -91,9 +91,10 @@ const Index = () => {
   const handleApplyFilters = (filters: FilterOptions) => {
     const filtered = allProducts.filter(product => {
       // Filter by product type
-      if (filters.productType && filters.productType !== "" && 
+      if (filters.productType && 
+          filters.productType !== "" && 
           filters.productType !== "all" && 
-          product.type !== filters.productType) {
+          product.type !== filters.productType as ProductType) {
         return false;
       }
       
@@ -150,6 +151,18 @@ const Index = () => {
   // Handle location changes from the VendorMap component
   const handleLocationChange = (location: string) => {
     setSelectedLocation(location);
+    
+    // Filter products by vendor location if a location is selected
+    if (location && location !== "") {
+      const vendorsInLocation = location.toLowerCase();
+      const filtered = allProducts.filter(product => 
+        product.vendor.toLowerCase().includes(vendorsInLocation)
+      );
+      setFilteredProducts(filtered);
+    } else {
+      // If no location is selected, show all products
+      setFilteredProducts(allProducts);
+    }
   };
 
   return (
