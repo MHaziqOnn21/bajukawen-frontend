@@ -23,20 +23,31 @@ export interface Product {
   size: string;
   vendor: string;
   theme: string;
+  type: string;
   images?: ProductImage[];
 }
 
 interface ProductCarouselProps {
-  products: Product[];
-  onProductChange: (product: Product) => void;
+  products?: Product[];
+  onProductChange?: (product: Product) => void;
 }
 
 export const ProductCarousel: React.FC<ProductCarouselProps> = ({
-  products,
-  onProductChange,
+  products = [],
+  onProductChange = () => {},
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  
+  // If there are no products, show a placeholder
+  if (!products || products.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[450px] bg-gray-100 rounded-lg">
+        <Image className="h-16 w-16 text-gray-400 mb-4" />
+        <p className="text-gray-500">No products available</p>
+      </div>
+    );
+  }
   
   const currentProduct = products[currentIndex];
   

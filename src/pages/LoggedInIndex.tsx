@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { NavigationLoggedIn } from "@/components/NavigationLoggedIn";
 import { Footer } from "@/components/Footer";
@@ -92,6 +93,68 @@ const products = [
   },
 ];
 
+// Sample reviews data for customer reviews component
+const mockReviews = [
+  {
+    id: 1,
+    customerName: "Sarah Johnson",
+    avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150",
+    rating: 5,
+    date: "April 15, 2025",
+    comment: "Absolutely stunning wedding attire! The quality exceeded my expectations and the fit was perfect. I received so many compliments on our special day."
+  },
+  {
+    id: 2,
+    customerName: "Michael Chen",
+    avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+    rating: 4.5,
+    date: "April 2, 2025",
+    comment: "Beautiful craftsmanship and the material is extremely high quality. The dress arrived earlier than expected. The only reason for 4.5 stars is that we needed minimal alterations for a perfect fit."
+  },
+  {
+    id: 3,
+    customerName: "Jessica Rodriguez",
+    avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
+    rating: 5,
+    date: "March 28, 2025",
+    comment: "We rented this set for our pre-wedding photoshoot and it was absolutely worth it. The details and embellishments looked amazing in our photos. Highly recommend!"
+  }
+];
+
+// Sample carousel products
+const carouselProducts = [
+  {
+    id: 1,
+    name: "Royal Elegance Collection",
+    description: "A stunning combination of traditional elegance and modern design.",
+    price: "MYR 2,800 / day",
+    availability: "In Stock",
+    brideImage: "https://images.unsplash.com/photo-1594552072238-5c4cefc1d033?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    groomImage: "https://images.unsplash.com/photo-1596474220362-7a329973cb35?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    color: "Ivory and Champagne",
+    material: "Premium Lace, Satin, and Tulle",
+    size: "XS - XXL (Customizable)",
+    vendor: "Elegant Bridal House",
+    theme: "Traditional Elegance",
+    type: "set"
+  },
+  {
+    id: 2,
+    name: "Modern Minimalist Set",
+    description: "For the contemporary couple who values simplicity and elegance.",
+    price: "MYR 2,200 / day",
+    availability: "Limited Availability",
+    brideImage: "https://images.unsplash.com/photo-1566114725077-855347e7b6e3?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    groomImage: "https://images.unsplash.com/photo-1597117303021-cb7e94649ebc?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    color: "Pure White and Charcoal",
+    material: "Premium Crepe and Italian Wool",
+    size: "XS - XXL (Customizable)",
+    vendor: "Chic Weddings Boutique",
+    theme: "Modern Simplicity",
+    type: "set"
+  }
+];
+
 // Filter function for products
 function getFilteredProducts(
   products,
@@ -144,6 +207,7 @@ export default function LoggedInIndex() {
   const [productType, setProductType] = useState<ProductType | string>("");
   const [searchQuery, setSearchQuery] = useState("");
   const [location, setLocation] = useState("");
+  const [selectedCarouselProduct, setSelectedCarouselProduct] = useState(carouselProducts[0]);
 
   const filteredProducts = getFilteredProducts(
     products,
@@ -175,11 +239,14 @@ export default function LoggedInIndex() {
 
   return (
     <div className="min-h-screen bg-baju-background">
-      <NavigationLoggedIn />
+      <NavigationLoggedIn username="User" />
 
       <main className="container mx-auto px-4 py-8">
         <section className="mb-12">
-          <ProductCarousel />
+          <ProductCarousel 
+            products={carouselProducts} 
+            onProductChange={setSelectedCarouselProduct} 
+          />
         </section>
 
         <section className="mb-12">
@@ -211,7 +278,7 @@ export default function LoggedInIndex() {
         </section>
 
         <section>
-          <CustomerReviews />
+          <CustomerReviews reviews={mockReviews} />
         </section>
       </main>
 

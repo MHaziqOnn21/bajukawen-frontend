@@ -13,10 +13,10 @@ export interface Review {
 }
 
 interface CustomerReviewsProps {
-  reviews: Review[];
+  reviews?: Review[];
 }
 
-export const CustomerReviews: React.FC<CustomerReviewsProps> = ({ reviews }) => {
+export const CustomerReviews: React.FC<CustomerReviewsProps> = ({ reviews = [] }) => {
   // Calculate average rating
   const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
   const averageRating = reviews.length > 0 ? totalRating / reviews.length : 0;
@@ -45,28 +45,34 @@ export const CustomerReviews: React.FC<CustomerReviewsProps> = ({ reviews }) => 
       
       <Separator className="bg-baju-input-border" />
       
-      <div className="space-y-6">
-        {reviews.map((review) => (
-          <div key={review.id} className="bg-white border border-baju-input-border rounded-lg p-4 md:p-6">
-            <div className="flex justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <Avatar>
-                  <AvatarImage src={review.avatarUrl} alt={review.customerName} />
-                  <AvatarFallback className="bg-baju-light text-baju-heading">
-                    {review.customerName.split(' ').map(n => n[0]).join('')}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-medium text-baju-heading">{review.customerName}</p>
-                  <p className="text-sm text-baju-subtext">{review.date}</p>
+      {reviews.length === 0 ? (
+        <div className="bg-white border border-baju-input-border rounded-lg p-6 text-center">
+          <p className="text-baju-subtext">No reviews yet.</p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {reviews.map((review) => (
+            <div key={review.id} className="bg-white border border-baju-input-border rounded-lg p-4 md:p-6">
+              <div className="flex justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <Avatar>
+                    <AvatarImage src={review.avatarUrl} alt={review.customerName} />
+                    <AvatarFallback className="bg-baju-light text-baju-heading">
+                      {review.customerName.split(' ').map(n => n[0]).join('')}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="font-medium text-baju-heading">{review.customerName}</p>
+                    <p className="text-sm text-baju-subtext">{review.date}</p>
+                  </div>
                 </div>
+                <ReviewStars rating={review.rating} />
               </div>
-              <ReviewStars rating={review.rating} />
+              <p className="text-baju-text">{review.comment}</p>
             </div>
-            <p className="text-baju-text">{review.comment}</p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

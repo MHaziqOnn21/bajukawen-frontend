@@ -15,9 +15,16 @@ import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
 import { Product, ProductImage, ProductType } from "@/types/product";
 
+// Update type to satisfy both interfaces properly
+// For ProductCarousel and Product type from types/product.d.ts
+interface ProductDetailsType extends Omit<Product, 'id'> {
+  id: string | number;
+  type: ProductType;
+}
+
 const ProductDetails = () => {
   const { id } = useParams();
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<ProductDetailsType | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
@@ -65,7 +72,7 @@ const ProductDetails = () => {
     }
   ];
 
-  const products: Product[] = [
+  const products: ProductDetailsType[] = [
     {
       id: 1,
       name: "Royal Elegance Collection",
@@ -447,7 +454,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const product = products.find(p => p.id === Number(id));
     if (product) {
-      setSelectedProduct({...product, type: product.type || "Dress"});
+      setSelectedProduct(product);
       if (product.color) {
         setSelectedColor(product.color.split(" and ")[0].trim());
       }
@@ -504,7 +511,14 @@ const ProductDetails = () => {
           <div className="space-y-8">
             <ProductCarousel
               products={[selectedProduct]}
-              onProductChange={(product) => setSelectedProduct(product)}
+              onProductChange={(product) => {
+                // Handle the type conversion safely
+                const updatedProduct: ProductDetailsType = {
+                  ...product,
+                  type: product.type as ProductType
+                };
+                setSelectedProduct(updatedProduct);
+              }}
             />
             <ProductInfo 
               product={selectedProduct}
