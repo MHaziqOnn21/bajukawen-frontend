@@ -23,7 +23,7 @@ const addressCoords = {
   lng: 101.6869
 };
 
-const FooterMap = () => {
+export const FooterMap = () => {
   return (
     <div className="w-full">
       <div 
@@ -31,7 +31,7 @@ const FooterMap = () => {
         style={{ minHeight: "100px" }}
       >
         <MapContainer 
-          center={[addressCoords.lat, addressCoords.lng]} 
+          defaultCenter={[addressCoords.lat, addressCoords.lng]} 
           zoom={15} 
           style={{ height: '100%', width: '100%' }}
           zoomControl={false}

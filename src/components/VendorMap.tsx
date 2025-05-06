@@ -1,9 +1,19 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { Search } from "lucide-react";
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import L from 'leaflet';
 
 // Fix for Leaflet marker icon issue
@@ -47,10 +57,19 @@ function MapViewUpdater({ filteredVendors }) {
 }
 
 export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
+  // Added state for location search
+  const [locationSearch, setLocationSearch] = useState("");
+  const [showLocationCommand, setShowLocationCommand] = useState(false);
+  
   // Filter vendors based on selected location
   const filteredVendors = selectedLocation 
     ? vendorLocations.filter(vendor => vendor.address === selectedLocation) 
     : vendorLocations;
+  
+  // Filter locations for the search
+  const filteredLocations = LOCATIONS.filter(location =>
+    location.toLowerCase().includes(locationSearch.toLowerCase())
+  );
   
   const handleLocationSelect = (location) => {
     if (onLocationChange) {
@@ -70,22 +89,39 @@ export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
         <span>Vendor Locations</span>
         <div className="flex items-center space-x-2">
           <div className="relative">
-            <Select 
-              value={selectedLocation || "all"}
-              onValueChange={(value) => handleLocationSelect(value)}
+            {/* Replace Select with Command Dialog button */}
+            <button
+              className="flex items-center justify-between px-3 py-2 text-sm border rounded-md border-baju-input-border bg-background w-[180px]"
+              onClick={() => setShowLocationCommand(true)}
             >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by location" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All locations</SelectItem>
-                {LOCATIONS.map(location => (
-                  <SelectItem key={location} value={location}>
-                    {location}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              <span className="truncate">{selectedLocation || "Search locations..."}</span>
+              <Search className="h-4 w-4 ml-2 flex-shrink-0" />
+            </button>
+            <CommandDialog open={showLocationCommand} onOpenChange={setShowLocationCommand}>
+              <Command>
+                <CommandInput 
+                  placeholder="Search locations..." 
+                  value={locationSearch}
+                  onValueChange={setLocationSearch}
+                />
+                <CommandList>
+                  <CommandEmpty>No locations found.</CommandEmpty>
+                  <CommandGroup>
+                    {filteredLocations.map((location) => (
+                      <CommandItem
+                        key={location}
+                        onSelect={() => {
+                          handleLocationSelect(location);
+                          setShowLocationCommand(false);
+                        }}
+                      >
+                        {location}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </CommandDialog>
           </div>
           {selectedLocation && (
             <Button 
@@ -100,7 +136,7 @@ export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
       </div>
       <div className="w-full h-[300px] rounded-lg overflow-hidden">
         <MapContainer 
-          center={[3.1390, 101.6869]} 
+          defaultCenter={[3.1390, 101.6869]} 
           zoom={11} 
           style={{ height: '100%', width: '100%' }} 
           className="z-0"
