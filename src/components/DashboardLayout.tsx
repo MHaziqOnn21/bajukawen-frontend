@@ -42,10 +42,10 @@ export const DashboardLayout = ({ children, dashboardType }: DashboardLayoutProp
   const navItems = dashboardType === 'admin' ? adminNavItems : vendorNavItems;
   
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-baju-background">
       {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 shadow-sm">
-        <div className="p-4 border-b border-gray-200">
+      <div className="w-64 bg-white border-r border-baju-divider shadow-sm">
+        <div className="p-4 border-b border-baju-divider">
           <h1 className="text-xl font-bold text-baju-heading">
             {dashboardType === 'admin' ? 'Admin Dashboard' : 'Vendor Dashboard'}
           </h1>
@@ -61,20 +61,20 @@ export const DashboardLayout = ({ children, dashboardType }: DashboardLayoutProp
                 className={cn(
                   "flex items-center px-4 py-3 text-sm rounded-md transition-colors",
                   isActive 
-                    ? "bg-baju-background text-baju-heading font-medium" 
-                    : "text-gray-500 hover:text-baju-heading hover:bg-gray-50"
+                    ? "bg-baju-soft text-baju-heading font-medium" 
+                    : "text-baju-subtext hover:text-baju-heading hover:bg-baju-background"
                 )}
               >
-                <item.icon className="w-5 h-5 mr-3" />
+                <item.icon className={cn("w-5 h-5 mr-3", isActive ? "text-baju-primary" : "text-baju-subtext")} />
                 {item.title}
               </Link>
             );
           })}
         </nav>
-        <div className="p-4 mt-auto border-t">
+        <div className="p-4 mt-auto border-t border-baju-divider">
           <Link 
             to="/" 
-            className="flex items-center text-sm text-gray-500 hover:text-baju-heading"
+            className="flex items-center text-sm text-baju-subtext hover:text-baju-heading"
           >
             Back to Store
           </Link>
