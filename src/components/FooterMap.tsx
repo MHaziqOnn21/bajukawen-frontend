@@ -31,7 +31,7 @@ export const FooterMap = () => {
         style={{ minHeight: "100px" }}
       >
         <MapContainer 
-          center={[addressCoords.lat, addressCoords.lng]} 
+          center={[addressCoords.lat, addressCoords.lng] as L.LatLngExpression} 
           zoom={15} 
           style={{ height: '100%', width: '100%' }}
           zoomControl={false}
@@ -45,7 +45,7 @@ export const FooterMap = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={[addressCoords.lat, addressCoords.lng]}>
+          <Marker position={[addressCoords.lat, addressCoords.lng] as L.LatLngExpression}>
             <Popup>BajuKawen HQ</Popup>
           </Marker>
         </MapContainer>
