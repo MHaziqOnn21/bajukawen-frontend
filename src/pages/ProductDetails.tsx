@@ -504,7 +504,7 @@ const ProductDetails = () => {
           <div className="space-y-8">
             <ProductCarousel
               products={[selectedProduct]}
-              onProductChange={(product) => setSelectedProduct(product)}
+              onProductChange={(product: Product) => setSelectedProduct(product)}
             />
             <ProductInfo 
               product={selectedProduct}

@@ -31,7 +31,7 @@ export const FooterMap = () => {
         style={{ minHeight: "100px" }}
       >
         <MapContainer 
-          defaultCenter={[addressCoords.lat, addressCoords.lng]} 
+          center={[addressCoords.lat, addressCoords.lng]} 
           zoom={15} 
           style={{ height: '100%', width: '100%' }}
           zoomControl={false}
@@ -42,6 +42,7 @@ export const FooterMap = () => {
           attributionControl={false}
         >
           <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <Marker position={[addressCoords.lat, addressCoords.lng]}>

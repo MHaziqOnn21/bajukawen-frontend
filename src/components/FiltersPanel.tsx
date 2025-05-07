@@ -33,9 +33,9 @@ interface FiltersPanelProps {
 }
 
 export interface FilterOptions {
-  productType: ProductType | "";
+  productType: string; // Changed from ProductType to string to allow "all" and "" values
   vendor: string;
-  location: string; // We'll keep this in the interface for compatibility
+  location: string;
   theme: string;
   color: string;
   priceRange: number[];
@@ -47,7 +47,7 @@ export const FiltersPanel: React.FC<FiltersPanelProps> = ({ onApplyFilters }) =>
   const [showVendorCommand, setShowVendorCommand] = useState(false);
   
   // Filter states
-  const [productType, setProductType] = useState<ProductType | "">("");
+  const [productType, setProductType] = useState<string>("");
   const [vendor, setVendor] = useState("");
   const [theme, setTheme] = useState("");
   const [color, setColor] = useState("");

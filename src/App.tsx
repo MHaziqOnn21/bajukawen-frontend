@@ -25,13 +25,16 @@ const queryClient = new QueryClient({
   },
 });
 
+// Get the base URL from Vite environment or default to '/'
+const baseUrl = import.meta.env.BASE_URL || '/';
+
 const App = () => (
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter basename={baseUrl}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/logged-in" element={<LoggedInIndex />} />
