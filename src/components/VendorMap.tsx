@@ -135,19 +135,19 @@ export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
       </div>
       <div className="w-full h-[300px] rounded-lg overflow-hidden">
         <MapContainer 
-          center={[3.1390, 101.6869] as L.LatLngExpression} 
+          center={[3.1390, 101.6869]} 
           zoom={11} 
           style={{ height: '100%', width: '100%' }} 
           className="z-0"
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {filteredVendors.map(vendor => (
             <Marker 
               key={vendor.id} 
-              position={[vendor.lat, vendor.lng] as L.LatLngExpression}
+              position={[vendor.lat, vendor.lng]}
             >
               <Popup>
                 <div>
