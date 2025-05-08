@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import LoggedInIndex from "./pages/LoggedInIndex";
 import Auth from "./pages/Auth";
 import AdminLogin from "./pages/AdminLogin";
+import VendorAuth from "./pages/VendorAuth";
 import ProductDetails from "./pages/ProductDetails";
 import UserProfile from "./pages/UserProfile";
 import Cart from "./pages/Cart";
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/logged-in" element={<LoggedInIndex />} />
             <Route path="/login" element={<Auth />} />
             <Route path="/admin-login" element={<AdminLogin />} />
+            <Route path="/vendor-login" element={<VendorAuth />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/cart" element={<Cart />} />

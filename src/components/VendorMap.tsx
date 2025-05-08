@@ -135,13 +135,12 @@ export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
       </div>
       <div className="w-full h-[300px] rounded-lg overflow-hidden">
         <MapContainer 
-          center={[3.1390, 101.6869]} 
-          zoom={11} 
+          defaultCenter={[3.1390, 101.6869]} 
+          defaultZoom={11} 
           style={{ height: '100%', width: '100%' }} 
           className="z-0"
         >
           <TileLayer
-            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {filteredVendors.map(vendor => (

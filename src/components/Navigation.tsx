@@ -34,6 +34,14 @@ export const Navigation = () => {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
+            <Link
+              to="/vendor-login"
+              className="text-baju-subtext hover:text-baju-heading transition-colors"
+            >
+              Vendor Portal
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
             <Button 
               variant="ghost" 
               size="icon" 
