@@ -135,8 +135,8 @@ export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
       </div>
       <div className="w-full h-[300px] rounded-lg overflow-hidden">
         <MapContainer 
-          defaultCenter={[3.1390, 101.6869]} 
-          defaultZoom={11} 
+          center={[3.1390, 101.6869]} 
+          zoom={11} 
           style={{ height: '100%', width: '100%' }} 
           className="z-0"
         >

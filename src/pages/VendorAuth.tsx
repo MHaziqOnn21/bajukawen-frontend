@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Building, MapPin } from "lucide-react";
+import { Form, FormField, FormItem, FormLabel, FormControl } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
 
 export default function VendorAuth() {
   const [activeTab, setActiveTab] = useState("login");
@@ -122,7 +125,10 @@ export default function VendorAuth() {
               <TabsContent value="signup" className="mt-0">
                 <form className="space-y-4" onSubmit={handleSignup}>
                   <div className="space-y-2">
-                    <label className="text-[#1A1F2C] text-sm font-medium">Business Name</label>
+                    <label className="text-[#1A1F2C] text-sm font-medium flex items-center gap-1">
+                      <Building className="h-4 w-4" />
+                      Business Name
+                    </label>
                     <Input
                       type="text"
                       placeholder="Your Business Name"
@@ -148,6 +154,53 @@ export default function VendorAuth() {
                       required
                     />
                   </div>
+
+                  {/* New Address Fields */}
+                  <div className="space-y-2">
+                    <label className="text-[#1A1F2C] text-sm font-medium flex items-center gap-1">
+                      <MapPin className="h-4 w-4" />
+                      Store Address
+                    </label>
+                    <Input
+                      type="text"
+                      placeholder="Street Address"
+                      className="border-[#E5DEFF] text-[#1A1F2C] mb-2"
+                      required
+                    />
+                    <div className="grid grid-cols-2 gap-2">
+                      <Input
+                        type="text"
+                        placeholder="City"
+                        className="border-[#E5DEFF] text-[#1A1F2C]"
+                        required
+                      />
+                      <Input
+                        type="text"
+                        placeholder="State"
+                        className="border-[#E5DEFF] text-[#1A1F2C]"
+                        required
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Input
+                        type="text"
+                        placeholder="Postal Code"
+                        className="border-[#E5DEFF] text-[#1A1F2C]"
+                        required
+                      />
+                      <Input
+                        type="text"
+                        placeholder="Malaysia"
+                        className="border-[#E5DEFF] text-[#1A1F2C] bg-gray-50"
+                        readOnly
+                      />
+                    </div>
+                    <p className="text-xs text-[#8E9196] mt-1 flex items-center gap-1">
+                      <MapPin className="h-3 w-3" /> 
+                      Your shop location will be displayed on the map
+                    </p>
+                  </div>
+
                   <div className="space-y-2">
                     <label className="text-[#1A1F2C] text-sm font-medium">Password</label>
                     <Input
@@ -247,7 +300,8 @@ function VendorTermsAndConditions({ onAccept, onCancel }) {
             2.1 Accurate Information: Vendors must provide accurate and complete information about their products and services.<br />
             2.2 Product Quality: Vendors are responsible for the quality and condition of all items listed.<br />
             2.3 Timely Delivery: Vendors must ensure timely delivery of products as agreed upon with customers.<br />
-            2.4 Customer Service: Vendors must maintain professional customer service standards and respond to inquiries promptly.
+            2.4 Customer Service: Vendors must maintain professional customer service standards and respond to inquiries promptly.<br />
+            2.5 Location Accuracy: Vendors must provide accurate store location information that will be displayed on our platform map.
           </p>
           
           <h3 className="font-semibold mb-2">3. FEES AND PAYMENTS</h3>
