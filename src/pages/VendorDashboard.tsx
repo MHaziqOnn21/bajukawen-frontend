@@ -48,7 +48,7 @@ const VendorSettings = () => {
           </div>
           <Button 
             type="submit" 
-            className="bg-baju-primary hover:bg-baju-secondary text-white"
+            className="bg-gradient-to-r from-baju-primary to-baju-secondary hover:bg-baju-secondary text-white"
           >
             Update Settings
           </Button>
@@ -140,7 +140,7 @@ const VendorProducts = () => {
         <CardTitle className="text-baju-heading">My Products</CardTitle>
         <Button 
           size="sm"
-          className="bg-baju-primary hover:bg-baju-secondary text-white"
+          className="bg-gradient-to-r from-baju-primary to-baju-secondary hover:bg-baju-secondary text-white"
         >
           Add New Product
         </Button>
