@@ -28,8 +28,8 @@ export const FooterMap = () => {
         style={{ minHeight: "100px" }}
       >
         <MapContainer 
-          center={addressCoords} 
-          zoom={15} 
+          defaultCenter={addressCoords} 
+          defaultZoom={15} 
           style={{ height: '100%', width: '100%' }}
           zoomControl={false}
           dragging={false}

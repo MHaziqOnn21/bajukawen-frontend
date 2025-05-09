@@ -56,89 +56,87 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-baju-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-baju-heading">Admin Portal</h1>
-          <p className="text-baju-subtext mt-2">Sign in to access the admin dashboard</p>
-        </div>
-        
-        <Card className="border-baju-input-border shadow-md">
-          <CardHeader className="pb-2 bg-baju-background/50">
-            <CardTitle className="text-2xl font-semibold text-center text-baju-heading">
-              Administrator Login
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="username" className="text-baju-heading">Username</Label>
-                <div className="relative">
-                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-baju-subtext">
-                    <UserIcon className="h-4 w-4" />
-                  </div>
-                  <Input
-                    id="username"
-                    type="text"
-                    placeholder="Enter your username"
-                    className="pl-10 border-baju-input-border focus:border-baju-input-focus"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    disabled={isLoading}
-                  />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-baju-background to-baju-peach p-4">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-baju-heading">Admin Portal</h1>
+        <p className="text-baju-subtext mt-2">Sign in to access the admin dashboard</p>
+      </div>
+      
+      <Card className="w-full max-w-md bg-white border border-baju-input-border shadow-md">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-2xl font-semibold text-center text-baju-heading">
+            Administrator Login
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="username" className="text-baju-heading">Username</Label>
+              <div className="relative">
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-baju-subtext">
+                  <UserIcon className="h-4 w-4" />
                 </div>
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="Enter your username"
+                  className="pl-10 border-baju-input-border focus:border-baju-input-focus"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  disabled={isLoading}
+                />
               </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-baju-heading">Password</Label>
-                <div className="relative">
-                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-baju-subtext">
-                    <LockIcon className="h-4 w-4" />
-                  </div>
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    className="pl-10 border-baju-input-border focus:border-baju-input-focus"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled={isLoading}
-                  />
-                  <button
-                    type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-baju-subtext hover:text-baju-heading"
-                    onClick={togglePasswordVisibility}
-                    tabIndex={-1}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                  >
-                    {showPassword ? (
-                      <EyeOffIcon className="h-4 w-4" />
-                    ) : (
-                      <EyeIcon className="h-4 w-4" />
-                    )}
-                  </button>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-baju-heading">Password</Label>
+              <div className="relative">
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-baju-subtext">
+                  <LockIcon className="h-4 w-4" />
                 </div>
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className="pl-10 border-baju-input-border focus:border-baju-input-focus"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-baju-subtext hover:text-baju-heading"
+                  onClick={togglePasswordVisibility}
+                  tabIndex={-1}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <EyeOffIcon className="h-4 w-4" />
+                  ) : (
+                    <EyeIcon className="h-4 w-4" />
+                  )}
+                </button>
               </div>
-              
-              <Button 
-                type="submit" 
-                className="w-full bg-baju-primary hover:bg-baju-secondary text-white"
-                disabled={isLoading}
-              >
-                {isLoading ? "Signing in..." : "Sign In"}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-        
-        <div className="text-center mt-6">
-          <a 
-            href="/" 
-            className="text-baju-subtext hover:text-baju-heading transition-colors"
-          >
-            Back to Home
-          </a>
-        </div>
+            </div>
+            
+            <Button 
+              type="submit" 
+              className="w-full bg-gradient-to-r from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading border-none"
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing in..." : "Sign In"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+      
+      <div className="text-center mt-6">
+        <a 
+          href="/" 
+          className="text-baju-subtext hover:text-baju-heading transition-colors"
+        >
+          Back to Home
+        </a>
       </div>
     </div>
   );

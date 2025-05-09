@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -36,7 +35,7 @@ export default function VendorAuth() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-baju-background p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-baju-background to-baju-peach p-4">
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-baju-heading mb-2">BajuKawen Vendors</h1>
         <p className="text-baju-subtext">
@@ -63,13 +62,13 @@ export default function VendorAuth() {
               <TabsList className="w-full bg-baju-background border-b border-baju-input-border mb-6">
                 <TabsTrigger
                   value="login"
-                  className="flex-1 text-baju-tab-inactive data-[state=active]:text-baju-tab-active data-[state=active]:border-b-2 data-[state=active]:border-baju-primary rounded-none"
+                  className="flex-1 text-baju-tab-inactive data-[state=active]:text-baju-heading data-[state=active]:border-b-2 data-[state=active]:border-baju-heading rounded-none"
                 >
                   Login
                 </TabsTrigger>
                 <TabsTrigger
                   value="signup"
-                  className="flex-1 text-baju-tab-inactive data-[state=active]:text-baju-tab-active data-[state=active]:border-b-2 data-[state=active]:border-baju-primary rounded-none"
+                  className="flex-1 text-baju-tab-inactive data-[state=active]:text-baju-heading data-[state=active]:border-b-2 data-[state=active]:border-baju-heading rounded-none"
                 >
                   Sign Up
                 </TabsTrigger>
@@ -97,7 +96,7 @@ export default function VendorAuth() {
                   </div>
                   <Button 
                     type="submit"
-                    className="w-full bg-baju-primary hover:bg-baju-secondary text-white border-none"
+                    className="w-full bg-gradient-to-r from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading border-none"
                   >
                     Login as Vendor
                   </Button>
@@ -249,7 +248,7 @@ export default function VendorAuth() {
                   
                   <Button 
                     type="submit"
-                    className="w-full bg-baju-primary hover:bg-baju-secondary text-white border-none"
+                    className="w-full bg-gradient-to-r from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading border-none"
                   >
                     Create Vendor Account
                   </Button>

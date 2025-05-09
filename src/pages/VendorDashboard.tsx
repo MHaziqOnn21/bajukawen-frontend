@@ -20,8 +20,8 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGri
 // Vendor settings component
 const VendorSettings = () => {
   return (
-    <Card className="border-baju-divider">
-      <CardHeader className="bg-baju-background/50">
+    <Card className="border-baju-divider bg-white shadow">
+      <CardHeader className="bg-white">
         <CardTitle className="text-baju-heading">Vendor Settings</CardTitle>
       </CardHeader>
       <CardContent>
@@ -48,7 +48,7 @@ const VendorSettings = () => {
           </div>
           <Button 
             type="submit" 
-            className="bg-baju-primary hover:bg-baju-secondary text-white"
+            className="bg-gradient-to-r from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading border-none"
           >
             Update Settings
           </Button>

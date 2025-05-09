@@ -49,6 +49,15 @@
 
     --radius: 0.5rem;
 
+    /* Add vendor dashboard specific colors */
+    .dashboard-card {
+      @apply bg-white border border-baju-divider rounded-lg shadow;
+    }
+    
+    .dashboard-header {
+      @apply bg-white border-b border-baju-divider;
+    }
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;

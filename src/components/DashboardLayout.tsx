@@ -42,7 +42,7 @@ export const DashboardLayout = ({ children, dashboardType }: DashboardLayoutProp
   const navItems = dashboardType === 'admin' ? adminNavItems : vendorNavItems;
   
   return (
-    <div className="flex min-h-screen bg-baju-background">
+    <div className="min-h-screen bg-baju-background">
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-baju-divider shadow-sm">
         <div className="p-4 border-b border-baju-divider">
@@ -61,11 +61,11 @@ export const DashboardLayout = ({ children, dashboardType }: DashboardLayoutProp
                 className={cn(
                   "flex items-center px-4 py-3 text-sm rounded-md transition-colors",
                   isActive 
-                    ? "bg-baju-soft text-baju-heading font-medium" 
+                    ? "bg-baju-background text-baju-heading font-medium" 
                     : "text-baju-subtext hover:text-baju-heading hover:bg-baju-background"
                 )}
               >
-                <item.icon className={cn("w-5 h-5 mr-3", isActive ? "text-baju-primary" : "text-baju-subtext")} />
+                <item.icon className={cn("w-5 h-5 mr-3", isActive ? "text-baju-heading" : "text-baju-subtext")} />
                 {item.title}
               </Link>
             );
