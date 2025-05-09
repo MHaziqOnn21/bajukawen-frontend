@@ -81,6 +81,8 @@ export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
       onLocationChange("");
     }
   };
+
+  const defaultCenter: L.LatLngExpression = [3.1390, 101.6869];
   
   return (
     <div className="w-full h-[400px] bg-baju-background rounded-lg border border-baju-input-border p-4 mb-8">
@@ -135,7 +137,7 @@ export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
       </div>
       <div className="w-full h-[300px] rounded-lg overflow-hidden">
         <MapContainer 
-          center={[3.1390, 101.6869]} 
+          center={defaultCenter} 
           zoom={11} 
           style={{ height: '100%', width: '100%' }} 
           className="z-0"
@@ -146,7 +148,7 @@ export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
           {filteredVendors.map(vendor => (
             <Marker 
               key={vendor.id} 
-              position={[vendor.lat, vendor.lng]}
+              position={[vendor.lat, vendor.lng] as L.LatLngExpression}
             >
               <Popup>
                 <div>

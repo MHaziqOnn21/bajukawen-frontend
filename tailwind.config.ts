@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -114,6 +115,8 @@ export default {
         'header-gradient': 'linear-gradient(to bottom, #f8e3e3, #f5c8c8)',
         'button-gradient': 'linear-gradient(to bottom, #f5c8c8, #e8b6b6)',
         'button-hover-gradient': 'linear-gradient(to bottom, #e8b6b6, #d9a3a3)',
+        'purple-gradient': 'linear-gradient(to right, #9b87f5, #7E69AB)',
+        'purple-hover-gradient': 'linear-gradient(to right, #7E69AB, #6E59A5)',
       },
 		}
 	},
