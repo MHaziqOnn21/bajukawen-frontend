@@ -164,3 +164,5 @@ export const VendorMap = ({ selectedLocation = "", onLocationChange }) => {
     </div>
   );
 };
+
+export default VendorMap;

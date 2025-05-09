@@ -64,7 +64,7 @@ const AdminLogin = () => {
         </div>
         
         <Card className="border-baju-input-border shadow-md">
-          <CardHeader className="pb-2">
+          <CardHeader className="pb-2 bg-baju-background/50">
             <CardTitle className="text-2xl font-semibold text-center text-baju-heading">
               Administrator Login
             </CardTitle>

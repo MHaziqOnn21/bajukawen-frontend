@@ -18,10 +18,7 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const addressCoords = {
-  lat: 3.139,
-  lng: 101.6869
-};
+const addressCoords: L.LatLngExpression = [3.139, 101.6869];
 
 export const FooterMap = () => {
   return (
@@ -31,7 +28,7 @@ export const FooterMap = () => {
         style={{ minHeight: "100px" }}
       >
         <MapContainer 
-          center={addressCoords as L.LatLngExpression} 
+          center={addressCoords} 
           zoom={15} 
           style={{ height: '100%', width: '100%' }}
           zoomControl={false}
@@ -44,7 +41,7 @@ export const FooterMap = () => {
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={[addressCoords.lat, addressCoords.lng]}>
+          <Marker position={addressCoords}>
             <Popup>BajuKawen HQ</Popup>
           </Marker>
         </MapContainer>
