@@ -4,7 +4,7 @@ import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
 import { ProductGrid } from "@/components/ProductGrid";
 import { VendorMap } from "@/components/VendorMap";
 import { Footer } from "@/components/Footer";
-import { Product, ProductType } from "@/types/product";
+import { Product } from "@/types/product";
 
 const Index = () => {
   const allProducts = [
@@ -93,7 +93,8 @@ const Index = () => {
       // Filter by product type
       if (filters.productType && filters.productType !== "" && 
           filters.productType !== "all" && 
-          product.type !== filters.productType) {
+          product.type !== filters.productType && 
+          filters.productType !== "all") {
         return false;
       }
       

@@ -53,11 +53,11 @@ function MapView({ filteredVendors, selectedVendor }) {
   return null;
 }
 
-export default function VendorMap() {
+export const VendorMap = ({ selectedLocation, onLocationChange }) => {
   const [filterType, setFilterType] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedVendor, setSelectedVendor] = useState(null);
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState(selectedLocation || "");
   
   // Apply filters to vendors
   const filteredVendors = vendors.filter(vendor => {
@@ -65,6 +65,13 @@ export default function VendorMap() {
     const matchesSearch = vendor.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesType && matchesSearch;
   });
+
+  // Update location when prop changes
+  useEffect(() => {
+    if (selectedLocation !== location) {
+      setLocation(selectedLocation || "");
+    }
+  }, [selectedLocation]);
 
   // Handle location search
   const handleSearch = () => {
@@ -85,15 +92,19 @@ export default function VendorMap() {
     setSearchQuery(vendor.name);
   };
   
-  const onLocationChange = (value) => {
+  const handleLocationChange = (value) => {
     setLocation(value);
+    if (onLocationChange) {
+      onLocationChange(value);
+    }
+    
     if (value === "") {
       setSelectedVendor(null);
       setSearchQuery("");
     }
   };
 
-  const defaultCenter = [3.1390, 101.6869];
+  const center = [3.1390, 101.6869];
   
   return (
     <div className="w-full h-[400px] bg-baju-background rounded-lg border border-baju-input-border p-4 mb-8">
@@ -114,7 +125,7 @@ export default function VendorMap() {
               placeholder="Enter location"
               className="border-baju-input-border focus:border-baju-input-focus pr-10"
               value={location}
-              onChange={(e) => onLocationChange(e.target.value)}
+              onChange={(e) => handleLocationChange(e.target.value)}
             />
             <Button 
               size="icon" 
@@ -154,8 +165,7 @@ export default function VendorMap() {
       </div>
       <div className="w-full h-[300px] rounded-lg overflow-hidden">
         <MapContainer 
-          defaultCenter={defaultCenter}
-          center={undefined} 
+          center={center}
           zoom={11} 
           style={{ height: '100%', width: '100%' }} 
           className="z-0"
@@ -217,4 +227,6 @@ export default function VendorMap() {
       </div>
     </div>
   );
-}
+};
+
+export default VendorMap;
