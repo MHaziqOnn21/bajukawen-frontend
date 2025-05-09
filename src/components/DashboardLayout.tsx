@@ -43,50 +43,70 @@ export const DashboardLayout = ({ children, dashboardType }: DashboardLayoutProp
   
   return (
     <div className="min-h-screen bg-baju-background">
-      {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-baju-divider shadow-sm">
-        <div className="p-4 border-b border-baju-divider">
-          <h1 className="text-xl font-bold text-baju-heading">
-            {dashboardType === 'admin' ? 'Admin Dashboard' : 'Vendor Dashboard'}
-          </h1>
+      {/* Header */}
+      <header className="bg-header-gradient shadow-sm">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between py-4">
+            <Link 
+              to="/" 
+              className="text-2xl font-bold text-baju-heading hover:opacity-80 transition-opacity"
+            >
+              BajuKawen.com
+            </Link>
+          </div>
         </div>
-        <nav className="p-4 space-y-1">
-          {navItems.map((item) => {
-            const isActive = location.pathname + location.search === item.href;
-            
-            return (
-              <Link
-                key={item.href}
-                to={item.href}
-                className={cn(
-                  "flex items-center px-4 py-3 text-sm rounded-md transition-colors",
-                  isActive 
-                    ? "bg-baju-background text-baju-heading font-medium" 
-                    : "text-baju-subtext hover:text-baju-heading hover:bg-baju-background"
-                )}
-              >
-                <item.icon className={cn("w-5 h-5 mr-3", isActive ? "text-baju-heading" : "text-baju-subtext")} />
-                {item.title}
-              </Link>
-            );
-          })}
-        </nav>
-        <div className="p-4 mt-auto border-t border-baju-divider">
-          <Link 
-            to="/" 
-            className="flex items-center text-sm text-baju-subtext hover:text-baju-heading"
-          >
-            Back to Store
-          </Link>
-        </div>
-      </div>
+      </header>
       
-      {/* Main content */}
-      <div className="flex-1 p-8">
-        <div className="max-w-6xl mx-auto">
-          {children}
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Sidebar */}
+          <div className="md:col-span-1">
+            <div className="bg-white rounded-lg shadow p-4">
+              <h2 className="text-xl font-semibold mb-4 text-baju-heading">
+                {dashboardType === 'admin' ? 'Admin Dashboard' : 'Vendor Dashboard'}
+              </h2>
+              <nav className="flex flex-col space-y-2">
+                {navItems.map((item) => {
+                  const isActive = location.pathname + location.search === item.href;
+                  
+                  return (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      className={cn(
+                        "flex items-center px-4 py-3 text-sm rounded-md transition-colors",
+                        isActive 
+                          ? "bg-gradient-to-r from-[#f5c8c8] to-[#e8b6b6] text-baju-heading font-medium" 
+                          : "text-baju-subtext hover:text-baju-heading hover:bg-baju-background"
+                      )}
+                    >
+                      <item.icon className={cn("w-5 h-5 mr-3", isActive ? "text-baju-heading" : "text-baju-subtext")} />
+                      {item.title}
+                    </Link>
+                  );
+                })}
+              </nav>
+              <div className="mt-4 pt-4 border-t border-baju-divider">
+                <Link 
+                  to="/" 
+                  className="flex items-center text-sm text-baju-subtext hover:text-baju-heading"
+                >
+                  Back to Store
+                </Link>
+              </div>
+            </div>
+          </div>
+          
+          {/* Main content */}
+          <div className="md:col-span-3">
+            <div className="bg-white rounded-lg shadow p-6">
+              {children}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
+export default DashboardLayout;

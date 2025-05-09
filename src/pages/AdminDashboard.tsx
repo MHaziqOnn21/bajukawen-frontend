@@ -19,33 +19,29 @@ import { Badge } from "@/components/ui/badge";
 // Admin settings component
 const AdminSettings = () => {
   return (
-    <Card className="border-baju-divider">
-      <CardHeader className="bg-baju-background/50">
-        <CardTitle className="text-baju-heading">Admin Settings</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="current-password" className="text-baju-text">Current Password</Label>
-            <Input id="current-password" type="password" className="border-baju-input-border focus:border-baju-input-focus" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="new-password" className="text-baju-text">New Password</Label>
-            <Input id="new-password" type="password" className="border-baju-input-border focus:border-baju-input-focus" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="confirm-password" className="text-baju-text">Confirm New Password</Label>
-            <Input id="confirm-password" type="password" className="border-baju-input-border focus:border-baju-input-focus" />
-          </div>
-          <Button 
-            type="submit" 
-            className="bg-baju-primary hover:bg-baju-secondary text-white"
-          >
-            Update Password
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+    <div>
+      <h3 className="text-2xl font-bold mb-6 text-baju-heading">Admin Settings</h3>
+      <form className="space-y-6">
+        <div className="space-y-2">
+          <Label htmlFor="current-password" className="text-baju-text">Current Password</Label>
+          <Input id="current-password" type="password" className="border-baju-input-border focus:border-baju-input-focus" />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="new-password" className="text-baju-text">New Password</Label>
+          <Input id="new-password" type="password" className="border-baju-input-border focus:border-baju-input-focus" />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="confirm-password" className="text-baju-text">Confirm New Password</Label>
+          <Input id="confirm-password" type="password" className="border-baju-input-border focus:border-baju-input-focus" />
+        </div>
+        <Button 
+          type="submit" 
+          className="bg-gradient-to-r from-[#f5c8c8] to-[#e8b6b6] hover:from-[#e8b6b6] hover:to-[#d9a3a3] text-baju-heading border-none"
+        >
+          Update Password
+        </Button>
+      </form>
+    </div>
   );
 };
 
@@ -58,46 +54,42 @@ const VendorsList = () => {
   ];
   
   return (
-    <Card className="border-baju-divider">
-      <CardHeader className="bg-baju-background/50">
-        <CardTitle className="text-baju-heading">Registered Vendors</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader className="bg-baju-background/30">
-            <TableRow>
-              <TableHead className="text-baju-text">ID</TableHead>
-              <TableHead className="text-baju-text">Name</TableHead>
-              <TableHead className="text-baju-text">Location</TableHead>
-              <TableHead className="text-baju-text">Products</TableHead>
-              <TableHead className="text-baju-text">Status</TableHead>
+    <div>
+      <h3 className="text-2xl font-bold mb-6 text-baju-heading">Registered Vendors</h3>
+      <Table>
+        <TableHeader className="bg-baju-background/30">
+          <TableRow>
+            <TableHead className="text-baju-text">ID</TableHead>
+            <TableHead className="text-baju-text">Name</TableHead>
+            <TableHead className="text-baju-text">Location</TableHead>
+            <TableHead className="text-baju-text">Products</TableHead>
+            <TableHead className="text-baju-text">Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {vendors.map((vendor) => (
+            <TableRow key={vendor.id} className="border-b border-baju-divider hover:bg-baju-background/20">
+              <TableCell className="text-baju-text">{vendor.id}</TableCell>
+              <TableCell className="text-baju-text font-medium">{vendor.name}</TableCell>
+              <TableCell className="text-baju-text">{vendor.location}</TableCell>
+              <TableCell className="text-baju-text">{vendor.products}</TableCell>
+              <TableCell>
+                <Badge 
+                  variant="outline"
+                  className={
+                    vendor.status === "Active" 
+                      ? "bg-green-100 text-green-800 border-green-200 hover:bg-green-100" 
+                      : "bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-100"
+                  }
+                >
+                  {vendor.status}
+                </Badge>
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {vendors.map((vendor) => (
-              <TableRow key={vendor.id} className="border-b border-baju-divider hover:bg-baju-background/20">
-                <TableCell className="text-baju-text">{vendor.id}</TableCell>
-                <TableCell className="text-baju-text font-medium">{vendor.name}</TableCell>
-                <TableCell className="text-baju-text">{vendor.location}</TableCell>
-                <TableCell className="text-baju-text">{vendor.products}</TableCell>
-                <TableCell>
-                  <Badge 
-                    variant="outline"
-                    className={
-                      vendor.status === "Active" 
-                        ? "bg-green-100 text-green-800 border-green-200 hover:bg-green-100" 
-                        : "bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-100"
-                    }
-                  >
-                    {vendor.status}
-                  </Badge>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 
@@ -110,44 +102,40 @@ const ProductsList = () => {
   ];
   
   return (
-    <Card className="border-baju-divider">
-      <CardHeader className="bg-baju-background/50">
-        <CardTitle className="text-baju-heading">Product Catalog</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader className="bg-baju-background/30">
-            <TableRow>
-              <TableHead className="text-baju-text">ID</TableHead>
-              <TableHead className="text-baju-text">Product Name</TableHead>
-              <TableHead className="text-baju-text">Vendor</TableHead>
-              <TableHead className="text-baju-text">Type</TableHead>
-              <TableHead className="text-baju-text">Price</TableHead>
-              <TableHead className="text-baju-text">Stock</TableHead>
+    <div>
+      <h3 className="text-2xl font-bold mb-6 text-baju-heading">Product Catalog</h3>
+      <Table>
+        <TableHeader className="bg-baju-background/30">
+          <TableRow>
+            <TableHead className="text-baju-text">ID</TableHead>
+            <TableHead className="text-baju-text">Product Name</TableHead>
+            <TableHead className="text-baju-text">Vendor</TableHead>
+            <TableHead className="text-baju-text">Type</TableHead>
+            <TableHead className="text-baju-text">Price</TableHead>
+            <TableHead className="text-baju-text">Stock</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {products.map((product) => (
+            <TableRow key={product.id} className="border-b border-baju-divider hover:bg-baju-background/20">
+              <TableCell className="text-baju-text">{product.id}</TableCell>
+              <TableCell className="text-baju-text font-medium">{product.name}</TableCell>
+              <TableCell className="text-baju-text">{product.vendor}</TableCell>
+              <TableCell>
+                <Badge 
+                  variant="outline"
+                  className="border-baju-divider text-baju-text bg-baju-background"
+                >
+                  {product.type.charAt(0).toUpperCase() + product.type.slice(1)}
+                </Badge>
+              </TableCell>
+              <TableCell className="text-baju-text">{product.price}</TableCell>
+              <TableCell className="text-baju-text">{product.stock}</TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {products.map((product) => (
-              <TableRow key={product.id} className="border-b border-baju-divider hover:bg-baju-background/20">
-                <TableCell className="text-baju-text">{product.id}</TableCell>
-                <TableCell className="text-baju-text font-medium">{product.name}</TableCell>
-                <TableCell className="text-baju-text">{product.vendor}</TableCell>
-                <TableCell>
-                  <Badge 
-                    variant="outline"
-                    className="border-baju-divider text-baju-text bg-baju-background"
-                  >
-                    {product.type.charAt(0).toUpperCase() + product.type.slice(1)}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-baju-text">{product.price}</TableCell>
-                <TableCell className="text-baju-text">{product.stock}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 
@@ -160,35 +148,31 @@ const CustomersList = () => {
   ];
   
   return (
-    <Card className="border-baju-divider">
-      <CardHeader className="bg-baju-background/50">
-        <CardTitle className="text-baju-heading">Registered Customers</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader className="bg-baju-background/30">
-            <TableRow>
-              <TableHead className="text-baju-text">ID</TableHead>
-              <TableHead className="text-baju-text">Name</TableHead>
-              <TableHead className="text-baju-text">Email</TableHead>
-              <TableHead className="text-baju-text">Orders</TableHead>
-              <TableHead className="text-baju-text">Customer Since</TableHead>
+    <div>
+      <h3 className="text-2xl font-bold mb-6 text-baju-heading">Registered Customers</h3>
+      <Table>
+        <TableHeader className="bg-baju-background/30">
+          <TableRow>
+            <TableHead className="text-baju-text">ID</TableHead>
+            <TableHead className="text-baju-text">Name</TableHead>
+            <TableHead className="text-baju-text">Email</TableHead>
+            <TableHead className="text-baju-text">Orders</TableHead>
+            <TableHead className="text-baju-text">Customer Since</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {customers.map((customer) => (
+            <TableRow key={customer.id} className="border-b border-baju-divider hover:bg-baju-background/20">
+              <TableCell className="text-baju-text">{customer.id}</TableCell>
+              <TableCell className="text-baju-text font-medium">{customer.name}</TableCell>
+              <TableCell className="text-baju-text">{customer.email}</TableCell>
+              <TableCell className="text-baju-text">{customer.orders}</TableCell>
+              <TableCell className="text-baju-text">{customer.since}</TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {customers.map((customer) => (
-              <TableRow key={customer.id} className="border-b border-baju-divider hover:bg-baju-background/20">
-                <TableCell className="text-baju-text">{customer.id}</TableCell>
-                <TableCell className="text-baju-text font-medium">{customer.name}</TableCell>
-                <TableCell className="text-baju-text">{customer.email}</TableCell>
-                <TableCell className="text-baju-text">{customer.orders}</TableCell>
-                <TableCell className="text-baju-text">{customer.since}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 
