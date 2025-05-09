@@ -82,7 +82,7 @@ export const DashboardLayout = ({ children, dashboardType }: DashboardLayoutProp
       </div>
       
       {/* Main content */}
-      <div className="flex-1 p-8 bg-baju-background">
+      <div className="flex-1 p-8">
         <div className="max-w-6xl mx-auto">
           {children}
         </div>

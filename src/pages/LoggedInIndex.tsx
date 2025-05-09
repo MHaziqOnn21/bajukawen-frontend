@@ -1,10 +1,11 @@
+
 import { useState } from "react";
 import { NavigationLoggedIn } from "@/components/NavigationLoggedIn";
 import { FiltersPanel, FilterOptions } from "@/components/FiltersPanel";
 import { ProductGrid } from "@/components/ProductGrid";
 import { VendorMap } from "@/components/VendorMap";
 import { Footer } from "@/components/Footer";
-import { Product } from "@/types/product";
+import { Product, ProductType } from "@/types/product";
 
 const LoggedInIndex = () => {
   const username = "John";
@@ -95,8 +96,7 @@ const LoggedInIndex = () => {
       // Filter by product type
       if (filters.productType && filters.productType !== "" && 
           filters.productType !== "all" && 
-          product.type !== filters.productType && 
-          filters.productType !== "all") {
+          product.type !== filters.productType) {
         return false;
       }
       

@@ -56,7 +56,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-baju-soft to-baju-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-baju-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-baju-heading">Admin Portal</h1>
@@ -64,7 +64,7 @@ const AdminLogin = () => {
         </div>
         
         <Card className="border-baju-input-border shadow-md">
-          <CardHeader className="pb-2 bg-baju-background/50">
+          <CardHeader className="pb-2">
             <CardTitle className="text-2xl font-semibold text-center text-baju-heading">
               Administrator Login
             </CardTitle>
@@ -122,7 +122,7 @@ const AdminLogin = () => {
               
               <Button 
                 type="submit" 
-                className="w-full bg-gradient-to-r from-baju-primary to-baju-secondary hover:bg-baju-secondary text-white"
+                className="w-full bg-baju-primary hover:bg-baju-secondary text-white"
                 disabled={isLoading}
               >
                 {isLoading ? "Signing in..." : "Sign In"}
